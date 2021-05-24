@@ -1,8 +1,9 @@
 class Style{
-  final String imageUrl;
-  final String id;
-  final String name;
-  final int time;
+  String id;
+  String imageUrl;
+  String name;
+  int time;
+  String courseId;
 
-  Style({this.id,this.imageUrl,this.name,this.time});
+  Style({this.id,this.imageUrl,this.name,this.time,this.courseId});
 }

@@ -21,12 +21,24 @@ class DBHelper {
   static final String productImageColumnName = 'productImage';
   static final String productPriceColumnName = 'productPrice';
   ////////course
-  static final String coursetableName = 'course';
+  static final String coursetableName = 'Courses';
   static final String courseIdColumnName = 'courseId';
   static final String courseNameColumnName= 'courseName';
   static final String courseImageUrlColumnName= 'courseImageUrl';
   static final String courseTimeColumnName= 'courseTime';
   static final String courseStudentsColumnName= 'courseStudents';
+  static final String courseProgressColumnName= 'courseStudents';
+  static final String courseFavColumnName= 'courseStudents';
+  /////////style
+  static final String styletableName = 'Styles';
+  static final String styleIdColumnName = 'styleId';
+  static final String styleNameColumnName= 'styleName';
+  static final String styleImageUrlColumnName= 'styleImageUrl';
+  static final String styleTimeColumnName= 'styleTime';
+  static final String styleCourseIdColumnName= 'styleCourseId';
+  static final String styleCompletedColumnName= 'styleCourseId';
+
+
 
   DBHelper._();
   static DBHelper dbHelper = DBHelper._();
@@ -71,8 +83,21 @@ class DBHelper {
             '$courseIdColumnName TEXT PRIMARY KEY, 
             '$courseNameColumnName TEXT,
             '$courseImageUrlColumnName TEXT,
-            '$courseTimeColumnName TEXT,
+            '$courseTimeColumnName INTEGER,
             '$courseStudentsColumnName TEXT
+            '$courseProgressColumnName TEXT,
+            '$courseFavColumnName INTEGER
+              )''');
+  }
+  createStylesTable(Database database) async {
+    database.execute(
+        '''CREATE TABLE $styletableName (
+            '$styleIdColumnName TEXT PRIMARY KEY, 
+            '$styleNameColumnName TEXT,
+            '$styleTimeColumnName TEXT,
+            '$styleImageUrlColumnName INTEGER,
+            '$styleCompletedColumnName INTEGER,
+            '$styleCourseIdColumnName TEXT
               )''');
   }
 
@@ -101,10 +126,12 @@ class DBHelper {
       await database.insert(courseIdColumnName, course.toJson());
     } catch (e) {}
   }
- getAllCourses(){
-
-
- }
+  Future<List<Course>> getAllCourses()async {
+    Database database = await initDatabase();
+    List<Map<String, Object>> rows = await database.query(coursetableName);
+    List<Course> courses = rows.map((e) => Course.fromMap(e)).toList();
+    return courses;
+  }
   Future<Course> getSpecialCourse(String id)async{
    Database database = await initDatabase();
    List<Map<String, Object>> maps = [];
