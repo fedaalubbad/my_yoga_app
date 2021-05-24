@@ -95,14 +95,25 @@ class DBHelper {
       NavigationService.navigationService.navigateAndReplaceWidget(HomeScreen());
     } catch (e) {}
   }
-  // insertCourse(Course course) async {
-  //   try {
-  //     Database database = await initDatabase();
-  //     await database.insert(courseIdColumnName, user.toJson());
-  //     SPHelper.spHelper.setUserEmail(user.email);
-  //     NavigationService.navigationService.navigateAndReplaceWidget(HomeScreen());
-  //   } catch (e) {}
-  // }
+  insertCourse(Course course) async {
+    try {
+      Database database = await initDatabase();
+      await database.insert(courseIdColumnName, course.toJson());
+    } catch (e) {}
+  }
+ getAllCourses(){
+
+
+ }
+  Future<Course> getSpecialCourse(String id)async{
+   Database database = await initDatabase();
+   List<Map<String, Object>> maps = [];
+   Course course;
+   maps=await database.query(coursetableName,
+       where: '$courseIdColumnName=?', whereArgs: [id]);
+   course=Course.fromMap(maps.first);
+   return course;
+ }
 
   Future<User> selectUser(String email, String password) async {
     Database database = await initDatabase();
@@ -118,9 +129,11 @@ class DBHelper {
             .navigateAndReplaceWidget(HomeScreen());
       } else {
         return null;
+        print('wrong pass');
       }
     } else {
       return null;
+      print('user not found');
     }
   }
 }
