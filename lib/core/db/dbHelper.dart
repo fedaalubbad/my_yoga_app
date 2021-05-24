@@ -57,11 +57,13 @@ class DBHelper {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
       String appDocPath = appDocDir.path;
-      String databaseName = 'ecommerce.db';
+      String databaseName = 'yogaApp.db';
       String dbPath = appDocPath + '/$databaseName';
       Database database =
       await openDatabase(dbPath, version: 1, onCreate: (database, v) {
         createUsersTable(database);
+        createCourseTable(database);
+        createStylesTable(database);
         createProductsTable(database);
       });
       return database;
@@ -71,15 +73,15 @@ class DBHelper {
   }
 
   createUsersTable(Database database) async {
-    database.execute(
-        '''CREATE TABLE $usertableName (
+  await  database.execute(
+        '''CREATE TABLE $usertableName(
         $userNameColumnName TEXT PRIMARY KEY, 
         $userPasswordColumnName TEXT
         )''');
   }
   createCourseTable(Database database) async {
-    database.execute(
-        '''CREATE TABLE $coursetableName (
+    await  database.execute(
+        '''CREATE TABLE $coursetableName(
             '$courseIdColumnName TEXT PRIMARY KEY, 
             '$courseNameColumnName TEXT,
             '$courseImageUrlColumnName TEXT,
@@ -90,8 +92,8 @@ class DBHelper {
               )''');
   }
   createStylesTable(Database database) async {
-    database.execute(
-        '''CREATE TABLE $styletableName (
+    await  database.execute(
+        '''CREATE TABLE $styletableName(
             '$styleIdColumnName TEXT PRIMARY KEY, 
             '$styleNameColumnName TEXT,
             '$styleTimeColumnName TEXT,
@@ -102,7 +104,7 @@ class DBHelper {
   }
 
   createProductsTable(Database database) async {
-    database.execute('''CREATE TABLE $productstableName (
+    await   database.execute('''CREATE TABLE $productstableName(
           $productIdColumnName INTEGER PRIMARY KEY AUTOINCREMENT,
           $productNameColumnName TEXT,
           $productDescriptionColumnName TEXT,
@@ -123,7 +125,7 @@ class DBHelper {
   insertCourse(Course course) async {
     try {
       Database database = await initDatabase();
-      await database.insert(courseIdColumnName, course.toJson());
+      await database.insert(coursetableName, course.toJson());
     } catch (e) {}
   }
   Future<List<Course>> getAllCourses()async {
