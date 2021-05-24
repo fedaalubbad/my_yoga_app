@@ -5,10 +5,12 @@ import 'package:my_yoga_app/data/data.dart';
 
 
 class Courses extends StatelessWidget {
+  List<Course>coursesList;
+  Courses(this.coursesList);
   Widget _buildCourses(BuildContext context, int index) {
     Size size = MediaQuery.of(context).size;
-    Course course = courses[index];
-
+    // Course course = courses[index];
+    Course course = coursesList[index];
     return Padding(
       padding: const EdgeInsets.symmetric(
           horizontal: appPadding, vertical: appPadding / 2),
@@ -123,7 +125,8 @@ class Courses extends StatelessWidget {
           Expanded(
               child: ListView.builder(
                 physics: BouncingScrollPhysics(),
-                itemCount: courses.length,
+                // itemCount: courses.length,
+                itemCount: coursesList.length,
                 itemBuilder: (context, index) {
                   return _buildCourses(context, index);
                 },

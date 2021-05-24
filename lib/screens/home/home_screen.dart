@@ -2,6 +2,9 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
+import 'package:my_yoga_app/core/db/dbHelper.dart';
+import 'package:my_yoga_app/core/db/models/course.dart';
+import 'package:my_yoga_app/data/data.dart';
 
 import 'components/courses.dart';
 import 'components/custom_app_bar.dart';
@@ -13,8 +16,26 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   int selsctedIconIndex = 2;
+  List<Course>allCourses;
+
+  getAllCourses()async{
+      List<Course>courses = await DBHelper.dbHelper.getAllCourses();
+      this.allCourses = courses;
+
+    setState(() {
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    getAllCourses();
+  }
+  insertCourses() {
+    for (int i=0; i < courses.length; i++) {
+      DBHelper.dbHelper.insertCourse(courses[i]);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
              DiffStyles(),
 
-             Courses(),
+             Courses(allCourses),
            ],
          ),
        ),
@@ -56,6 +77,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Icon(Icons.favorite_border_outlined, size: 30,color: selsctedIconIndex == 3 ? white : black,),
           Icon(Icons.person_outline, size: 30,color: selsctedIconIndex == 4 ? white : black,),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed:insertCourses,
       ),
     );
   }
