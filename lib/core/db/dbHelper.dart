@@ -95,14 +95,14 @@ class DBHelper {
       NavigationService.navigationService.navigateAndReplaceWidget(HomeScreen());
     } catch (e) {}
   }
-  insertCourse(Course course) async {
-    try {
-      Database database = await initDatabase();
-      await database.insert(courseIdColumnName, user.toJson());
-      SPHelper.spHelper.setUserEmail(user.email);
-      NavigationService.navigationService.navigateAndReplaceWidget(HomeScreen());
-    } catch (e) {}
-  }
+  // insertCourse(Course course) async {
+  //   try {
+  //     Database database = await initDatabase();
+  //     await database.insert(courseIdColumnName, user.toJson());
+  //     SPHelper.spHelper.setUserEmail(user.email);
+  //     NavigationService.navigationService.navigateAndReplaceWidget(HomeScreen());
+  //   } catch (e) {}
+  // }
 
   Future<User> selectUser(String email, String password) async {
     Database database = await initDatabase();
