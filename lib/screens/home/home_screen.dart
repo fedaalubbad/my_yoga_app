@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
 import 'package:my_yoga_app/core/db/dbHelper.dart';
 import 'package:my_yoga_app/core/db/models/course.dart';
+import 'package:my_yoga_app/core/db/models/style.dart';
 import 'package:my_yoga_app/data/data.dart';
 
 import 'components/courses.dart';
@@ -26,20 +27,45 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
     });
   }
+  List<Style>stylesForBeginner;
+
+  getStyles(String courseId)async{
+      List<Style>styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
+      this.stylesForBeginner = styles;
+
+    setState(() {
+    });
+    return styles;
+  }
   @override
   void initState() {
     super.initState();
     getAllCourses();
+    getStyles('2');
   }
   insertCourses() async{
     for (int i=0; i < courses.length; i++) {
      await DBHelper.dbHelper.insertCourse(courses[i]);
     }
+    setState(() {
+
+    });
   }
   insertStyles()async{
     for (int i=0; i < styles.length; i++) {
       await DBHelper.dbHelper.insertStyle(styles[i]);
     }
+    insertCourses();
+    setState(() {
+
+    });
+  }
+  deleteData()async{
+    DBHelper.dbHelper.cleanDatabase();
+    // DBHelper.dbHelper.deleteTable();
+    // setState(() {
+    //
+    // });
   }
 
   @override
@@ -55,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
            children: [
              CustomAppBar(),
 
-             DiffStyles(),
+             DiffStyles(stylesForBeginner),
 
              Courses(allCourses),
            ],
@@ -84,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed:insertStyles,
+        onPressed:insertStyles
       ),
     );
   }

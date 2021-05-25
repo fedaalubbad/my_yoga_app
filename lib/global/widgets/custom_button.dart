@@ -10,29 +10,29 @@ class Custom_Button extends StatelessWidget{
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return InkWell(
-    onTap: () => function(),
-    child: Material(
-        elevation: 10.0,
-        shadowColor: primary,
-        color: secondary,
-        borderRadius: BorderRadius.circular(30.0),
-        child: Container(
-          width: size.width,
-          // height: size.width * 0.15,
-          height: size.height * 0.08,
-          child: Center(
-            child: Text(
-              title,
-              style: TextStyle(
-                color: white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+      onTap: () => function(),
+      child: Material(
+          elevation: 10.0,
+          shadowColor: primary,
+          color: secondary,
+          borderRadius: BorderRadius.circular(30.0),
+          child: Container(
+            width: size.width,
+            // height: size.width * 0.15,
+            height: size.height * 0.08,
+            child: Center(
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-        )),
+          )),
 
-  );
+    );
   }
 
 }

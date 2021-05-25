@@ -39,7 +39,7 @@ class SplashScreenState extends State<SplashScreen>{
           height: double.infinity,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/images/pic3.jpg'),
+                  image: AssetImage('assets/images/yoga-pose.png'),
                   fit: BoxFit.cover,colorFilter: ColorFilter.mode(secondary.withOpacity(0.8),BlendMode.darken))),
 
         ),

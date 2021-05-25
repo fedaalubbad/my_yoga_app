@@ -13,6 +13,8 @@ class DBHelper {
   static final String userTableName = 'Users';
   static final String userNameColumnName = 'userName';
   static final String userPasswordColumnName = 'userPassword';
+  static final String userImageColumnName = 'userImage';
+
   /////product
   static final String productsTableName = 'Products';
   static final String productIdColumnName = 'productId';
@@ -21,27 +23,29 @@ class DBHelper {
   static final String productCategoryColumnName = 'productCategory';
   static final String productImageColumnName = 'productImage';
   static final String productPriceColumnName = 'productPrice';
-  ////////course
-  static const String courseTableName = 'Courses';
-  static const String courseIdColumnName = 'courseId';
-  static const String courseNameColumnName= 'courseName';
-  static const String courseImageUrlColumnName= 'courseImageUrl';
-  static const String courseTimeColumnName= 'courseTime';
-  static const String courseStudentsColumnName= 'courseStudents';
-  static const String courseProgressColumnName= 'courseProgress';
-  static const String courseFavColumnName= 'courseFav';
-  /////////style
-  static final String styleTableName = 'Styles';
-  static final String styleIdColumnName = 'styleId';
-  static final String styleNameColumnName= 'styleName';
-  static final String styleImageUrlColumnName= 'styleImageUrl';
-  static final String styleTimeColumnName= 'styleTime';
-  static final String styleCourseIdColumnName= 'styleCourseId';
-  static final String styleCompletedColumnName= 'styleCompleted';
 
+  ////////course
+  static const String courseTableName = 'courses';
+  static const String courseIdColumnName = 'courseId';
+  static const String courseNameColumnName = 'courseName';
+  static const String courseImageUrlColumnName = 'courseImageUrl';
+  static const String courseTimeColumnName = 'courseTime';
+  static const String courseStudentsColumnName = 'courseStudents';
+  static const String courseProgressColumnName = 'courseProgress';
+  static const String courseFavColumnName = 'courseFav';
+
+  /////////style
+  static final String styleTableName = 'styles';
+  static final String styleIdColumnName = 'styleId';
+  static final String styleNameColumnName = 'styleName';
+  static final String styleImageUrlColumnName = 'styleImageUrl';
+  static final String styleTimeColumnName = 'styleTime';
+  static final String styleCourseIdColumnName = 'styleCourseId';
+  static final String styleCompletedColumnName = 'styleCompleted';
 
 
   DBHelper._();
+
   static DBHelper dbHelper = DBHelper._();
   Database x; // save connection with database
 
@@ -61,8 +65,8 @@ class DBHelper {
       String databaseName = 'myYoga.db';
       String dbPath = appDocPath + '/$databaseName';
       Database database =
-      await openDatabase(dbPath, version: 2, onCreate: (database, v)async{
-       await database.execute(CourseTable);
+      await openDatabase(dbPath, version: 4, onCreate: (database, v) async {
+        await database.execute(CourseTable);
         createUsersTable(database);
         // createCourseTable(database);
         createStylesTable(database);
@@ -75,21 +79,24 @@ class DBHelper {
   }
 
   createUsersTable(Database database) async {
-  await database.execute(
-      '''CREATE TABLE $userTableName (
-        $userNameColumnName TEXT PRIMARY KEY, 
+    await database.execute(
+        '''CREATE TABLE $userTableName (
+        $userNameColumnName INTEGER PRIMARY KEY AUTOINCREMENT, 
+        $userPasswordColumnName TEXT,
         $userPasswordColumnName TEXT
         );''');
   }
-  static const CourseTable="""CREATE TABLE IF NOT EXISTS $courseTableName (
+
+  static const CourseTable = """CREATE TABLE IF NOT EXISTS $courseTableName (
             $courseIdColumnName TEXT PRIMARY KEY, 
             $courseNameColumnName TEXT,
             $courseImageUrlColumnName TEXT,
             $courseTimeColumnName INTEGER,
-            $courseStudentsColumnName TEXT
+            $courseStudentsColumnName TEXT,
             $courseProgressColumnName INTEGER,
             $courseFavColumnName INTEGER
               );""";
+
   // createCourseTable(Database database) async {
   //   await database.execute(
   //       '''CREATE TABLE $courseTableName (
@@ -101,14 +108,22 @@ class DBHelper {
   //           $courseProgressColumnName TEXT,
   //           $courseFavColumnName INTEGER
   //             );''');
-  // }
+
+  // static const StylesTable='''CREATE TABLE $styleTableName (
+  //           $styleIdColumnName TEXT PRIMARY KEY,
+  //           $styleNameColumnName TEXT,
+  //           $styleTimeColumnName TEXT,
+  //           $styleImageUrlColumnName TEXT,
+  //           $styleCompletedColumnName INTEGER,
+  //           $styleCourseIdColumnName TEXT
+  //             );''';
   createStylesTable(Database database) async {
     await database.execute(
         '''CREATE TABLE $styleTableName (
             $styleIdColumnName TEXT PRIMARY KEY, 
             $styleNameColumnName TEXT,
             $styleTimeColumnName TEXT,
-            $styleImageUrlColumnName INTEGER,
+            $styleImageUrlColumnName TEXT,
             $styleCompletedColumnName INTEGER,
             $styleCourseIdColumnName TEXT
               );''');
@@ -133,6 +148,7 @@ class DBHelper {
       await database.insert(courseTableName, course.toJson());
     } catch (e) {}
   }
+
   insertStyle(Style style) async {
     try {
       Database database = await initDatabase();
@@ -140,48 +156,52 @@ class DBHelper {
     } catch (e) {}
   }
 
-  Future<List<Course>> getAllCourses()async {
+  Future<List<Course>> getAllCourses() async {
     Database database = await initDatabase();
     List<Map<String, Object>> rows = await database.query(courseTableName);
     List<Course> courses = rows.map((e) => Course.fromMap(e)).toList();
     return courses;
   }
- //  Future<Course> getSpecialCourse(String id)async{
- //   Database database = await initDatabase();
- //   List<Map<String, Object>> maps = [];
- //   Course course;
- //   maps=await database.query(courseTableName,
- //       where: '$courseIdColumnName=?', whereArgs: [id]);
- //   course=Course.fromMap(maps.first);
- //   return course;
- // }
-  Future<List<Course>> getFavCourses()async{
-   Database database = await initDatabase();
-   List<Map<String, Object>> maps = [];
-   List<Course>courses;
-   maps= await database.query(courseTableName,
-       where: '$courseFavColumnName=?', whereArgs: [1]);
-   courses=maps.map((e) => Course.fromMap(e)).toList();
-   return courses;
- }
-  Future<List<Style>> getStylesInCourse(String courseId)async{
-   Database database = await initDatabase();
-   List<Map<String, Object>> maps = [];
-   List<Style> styles;
-   maps=await database.query(styleTableName,
-       where: '$styleCourseIdColumnName=?', whereArgs: [courseId]);
-   styles=maps.map((e) => Style.fromMap(e)).toList();
-   return styles;
- }
-  Future<Style> getSpecificStyle(String id)async{
-   Database database = await initDatabase();
-   List<Map<String, Object>> maps = [];
-   Style style;
-   maps=await database.query(styleTableName,
-       where: '$styleIdColumnName=?', whereArgs: [id]);
-   style=Style.fromMap(maps.first);
-   return style;
- }
+
+  //  Future<Course> getSpecialCourse(String id)async{
+  //   Database database = await initDatabase();
+  //   List<Map<String, Object>> maps = [];
+  //   Course course;
+  //   maps=await database.query(courseTableName,
+  //       where: '$courseIdColumnName=?', whereArgs: [id]);
+  //   course=Course.fromMap(maps.first);
+  //   return course;
+  // }
+  Future<List<Course>> getFavCourses() async {
+    Database database = await initDatabase();
+    List<Map<String, Object>> maps = [];
+    List<Course>courses;
+    maps = await database.query(courseTableName,
+        where: '$courseFavColumnName=?', whereArgs: [1]);
+    courses = maps.map((e) => Course.fromMap(e)).toList();
+    return courses;
+  }
+
+  Future<List<Style>> getStylesInCourse(String courseId) async {
+    Database database = await initDatabase();
+    List<Map<String, Object>> maps = [];
+    List<Style> styles;
+    maps = await database.query(styleTableName,
+        where: '$styleCourseIdColumnName=?', whereArgs: [courseId]);
+    styles = maps.map((e) => Style.fromMap(e)).toList();
+    return styles;
+  }
+
+  Future<Style> getSpecificStyle(String id) async {
+    Database database = await initDatabase();
+    List<Map<String, Object>> maps = [];
+    Style style;
+    maps = await database.query(styleTableName,
+        where: '$styleIdColumnName=?', whereArgs: [id]);
+    style = Style.fromMap(maps.first);
+    return style;
+  }
+
   updateStyle(Style style) async {
     try {
       Database database = await initDatabase();
@@ -193,6 +213,7 @@ class DBHelper {
       print(e);
     }
   }
+
   favCourse(Course course) async {
     try {
       Database database = await initDatabase();
@@ -204,7 +225,8 @@ class DBHelper {
       print(e);
     }
   }
-  updateCourseProgress(Course course,progress) async {
+
+  updateCourseProgress(Course course, progress) async {
     try {
       Database database = await initDatabase();
       course.progress = progress;
@@ -215,14 +237,17 @@ class DBHelper {
       print(e);
     }
   }
+
   insertUser(User user) async {
     try {
       Database database = await initDatabase();
       await database.insert(userTableName, user.toJson());
       SPHelper.spHelper.setUserEmail(user.email);
-      NavigationService.navigationService.navigateAndReplaceWidget(HomeScreen());
+      NavigationService.navigationService.navigateAndReplaceWidget(
+          HomeScreen());
     } catch (e) {}
   }
+
   Future<User> selectUser(String email, String password) async {
     Database database = await initDatabase();
     List<Map<String, Object>> maps = [];
@@ -244,4 +269,29 @@ class DBHelper {
       print('user not found');
     }
   }
+
+  Future<void> cleanDatabase() async {
+    try {
+      Database database = await initDatabase();
+      await database.transaction((txn) async {
+        var batch = txn.batch();
+        // batch.delete(courseTableName);
+        batch.delete(styleTableName);
+
+        await batch.commit();
+      });
+    } catch (error) {
+      throw Exception('DbBase.cleanDatabase: ' + error.toString());
+    }
+  }
+    Future<void> deleteTable() async {
+      try {
+        Database database = await initDatabase();
+        database.delete(courseTableName);
+        database.delete(styleTableName);
+      } catch (error) {
+        throw Exception('DbBase.cleanDatabase: ' + error.toString());
+      }
+    }
+
 }

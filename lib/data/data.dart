@@ -4,21 +4,21 @@ import 'package:my_yoga_app/core/db/models/style.dart';
 final _standStyle = Style(
   imageUrl: 'assets/images/pose2.png',
   name: 'Standing Style',
-  time: 5,
+  time: '5',
   courseId:'2',
   completed:false,
 );
 final _sittingStyle = Style(
   imageUrl: 'assets/images/pose1.png',
   name: 'Sitting Style',
-  time: 8,
+  time: '8',
   courseId:'2',
   completed:false,
 );
 final _legCrossStyle = Style(
   imageUrl: 'assets/images/pose3.png',
   name: 'Leg Cross Style',
-  time: 6,
+  time: '6',
   courseId:'2',
   completed:false,
 );

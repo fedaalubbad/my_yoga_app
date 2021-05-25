@@ -8,7 +8,7 @@ class NavigationService {
   }
   static NavigationService navigationService = NavigationService._();
 /////////////
-   routeReplacement(BuildContext context, Widget screen) {
+  routeReplacement(BuildContext context, Widget screen) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => screen),

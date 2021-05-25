@@ -4,7 +4,7 @@ class Style{
   String id;
   String imageUrl;
   String name;
-  int time;
+  String time;
   String courseId;
   bool completed;
 
@@ -16,7 +16,7 @@ class Style{
       DBHelper.styleImageUrlColumnName: this.imageUrl,
       DBHelper.styleTimeColumnName: this.time,
       DBHelper.styleCourseIdColumnName: this.courseId,
-      DBHelper.styleCompletedColumnName: this.completed
+      DBHelper.styleCompletedColumnName: this.completed?1:0
     };
   }
   Style.fromMap(Map map) {
@@ -25,6 +25,6 @@ class Style{
     this.imageUrl = map[DBHelper.styleImageUrlColumnName];
     this.time = map[DBHelper.styleTimeColumnName];
     this.courseId = map[DBHelper.styleCourseIdColumnName];
-    this.completed = map[DBHelper.styleCompletedColumnName];
+    this.completed = map[DBHelper.styleCompletedColumnName]==1?true:false;
   }
 }

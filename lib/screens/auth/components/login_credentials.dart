@@ -97,11 +97,11 @@ class LoginCredentials extends StatelessWidget {
             child: RichText
               (text:TextSpan(text:"you haven't any account yet!",style:TextStyle(
                 fontSize: 14, color: Colors.black),children: [
-                TextSpan(text:"Sign Up",style:TextStyle(
+              TextSpan(text:"Sign Up",style:TextStyle(
                   fontSize: 14, color: Colors.blueAccent),
-                  recognizer:TapGestureRecognizer()..onTap = () {
+                recognizer:TapGestureRecognizer()..onTap = () {
                   gotoSign();
-                   },
+                },
               ),
             ]),
             ),
@@ -111,8 +111,8 @@ class LoginCredentials extends StatelessWidget {
     );
 
   }
-gotoSign(){
-  NavigationService.navigationService.navigateAndReplaceWidget(SignUpScreen());
-}
+  gotoSign(){
+    NavigationService.navigationService.navigateAndReplaceWidget(SignUpScreen());
+  }
 
 }

@@ -19,8 +19,8 @@ class Course{
       DBHelper.courseImageUrlColumnName: this.imageUrl,
       DBHelper.courseTimeColumnName: this.time,
       DBHelper.courseStudentsColumnName: this.students,
-      DBHelper.courseFavColumnName: this.fav,
-      DBHelper.courseProgressColumnName: this.students
+      DBHelper.courseFavColumnName: this.fav?1:0,
+      DBHelper.courseProgressColumnName: this.progress
     };
   }
   Course.fromMap(Map map) {
@@ -29,7 +29,7 @@ class Course{
     this.imageUrl = map[DBHelper.courseImageUrlColumnName];
     this.time = map[DBHelper.courseTimeColumnName];
     this.students = map[DBHelper.courseStudentsColumnName];
-    this.fav = map[DBHelper.courseFavColumnName];
+    this.fav = map[DBHelper.courseFavColumnName]==1?true:false;
     this.progress = map[DBHelper.courseProgressColumnName];
   }
 }
