@@ -6,8 +6,8 @@ class Course{
    String name;
    int time;
    String students;
-   int fav;
-   String progress;
+   bool fav;
+   int progress;
 
   Course({this.id,this.imageUrl,this.name,this.time,this.students,this.fav,this.progress});
 

@@ -6,21 +6,21 @@ final _standStyle = Style(
   name: 'Standing Style',
   time: 5,
   courseId:'2',
-  completed:0,
+  completed:false,
 );
 final _sittingStyle = Style(
   imageUrl: 'assets/images/pose1.png',
   name: 'Sitting Style',
   time: 8,
   courseId:'2',
-  completed:0,
+  completed:false,
 );
 final _legCrossStyle = Style(
   imageUrl: 'assets/images/pose3.png',
   name: 'Leg Cross Style',
   time: 6,
   courseId:'2',
-  completed:0,
+  completed:false,
 );
 
 final List<Style>styles = [_standStyle,_sittingStyle,_legCrossStyle];
@@ -31,8 +31,8 @@ final _course1 = Course(
     name: 'Advance Stretchings',
     time: 45,
     students: 'Advanced',
-    fav:0,
-    progress: '0',
+    fav:false,
+    progress: 0,
 
 );
 
@@ -42,8 +42,8 @@ final _course3 = Course(
     name: 'Meditation',
     time: 20,
     students: 'Beginner',
-    fav:0,
-    progress: '0',
+    fav:false,
+    progress: 0,
 );
 final _course2 = Course(
     id: "3",
@@ -51,8 +51,8 @@ final _course2 = Course(
     name: 'Daily Yoga',
     time: 30,
     students: 'Intermediate',
-    fav:0,
-    progress: '0',
+    fav:false,
+    progress: 0,
 );
 
 final List<Course> courses = [_course1,_course3,_course2];

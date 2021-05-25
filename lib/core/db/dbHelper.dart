@@ -87,7 +87,7 @@ class DBHelper {
             $courseImageUrlColumnName TEXT,
             $courseTimeColumnName INTEGER,
             $courseStudentsColumnName TEXT
-            $courseProgressColumnName TEXT,
+            $courseProgressColumnName INTEGER,
             $courseFavColumnName INTEGER
               );""";
   // createCourseTable(Database database) async {
@@ -126,14 +126,7 @@ class DBHelper {
          );''');
   }
 
-  insertUser(User user) async {
-    try {
-      Database database = await initDatabase();
-      await database.insert(userTableName, user.toJson());
-      SPHelper.spHelper.setUserEmail(user.email);
-      NavigationService.navigationService.navigateAndReplaceWidget(HomeScreen());
-    } catch (e) {}
-  }
+
   insertCourse(Course course) async {
     try {
       Database database = await initDatabase();
@@ -189,7 +182,47 @@ class DBHelper {
    style=Style.fromMap(maps.first);
    return style;
  }
-
+  updateStyle(Style style) async {
+    try {
+      Database database = await initDatabase();
+      style.completed = !style.completed;
+      int updatedRows = await database.update(styleTableName, style.toJson(),
+          where: '$styleIdColumnName = ?', whereArgs: [style.id]);
+      print(updatedRows);
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+  favCourse(Course course) async {
+    try {
+      Database database = await initDatabase();
+      course.fav = !course.fav;
+      int updatedRows = await database.update(courseTableName, course.toJson(),
+          where: '$courseIdColumnName = ?', whereArgs: [course.id]);
+      print(updatedRows);
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+  updateCourseProgress(Course course,progress) async {
+    try {
+      Database database = await initDatabase();
+      course.progress = progress;
+      int updatedRows = await database.update(courseTableName, course.toJson(),
+          where: '$courseIdColumnName = ?', whereArgs: [course.id]);
+      print(updatedRows);
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+  insertUser(User user) async {
+    try {
+      Database database = await initDatabase();
+      await database.insert(userTableName, user.toJson());
+      SPHelper.spHelper.setUserEmail(user.email);
+      NavigationService.navigationService.navigateAndReplaceWidget(HomeScreen());
+    } catch (e) {}
+  }
   Future<User> selectUser(String email, String password) async {
     Database database = await initDatabase();
     List<Map<String, Object>> maps = [];
