@@ -31,9 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     getAllCourses();
   }
-  insertCourses() {
+  insertCourses() async{
     for (int i=0; i < courses.length; i++) {
-      DBHelper.dbHelper.insertCourse(courses[i]);
+     await DBHelper.dbHelper.insertCourse(courses[i]);
     }
   }
 

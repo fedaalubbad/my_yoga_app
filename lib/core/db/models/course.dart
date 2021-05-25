@@ -6,16 +6,21 @@ class Course{
    String name;
    int time;
    String students;
+   String fav;
+   String progress;
 
   Course({this.id,this.imageUrl,this.name,this.time,this.students});
 
   toJson() {
+
     return {
       DBHelper.courseIdColumnName: this.id,
       DBHelper.courseNameColumnName: this.name,
       DBHelper.courseImageUrlColumnName: this.imageUrl,
       DBHelper.courseTimeColumnName: this.time,
-      DBHelper.courseStudentsColumnName: this.students
+      DBHelper.courseStudentsColumnName: this.students,
+      DBHelper.courseFavColumnName: this.fav,
+      DBHelper.courseProgressColumnName: this.students
     };
   }
   Course.fromMap(Map map) {
@@ -24,5 +29,7 @@ class Course{
     this.imageUrl = map[DBHelper.courseImageUrlColumnName];
     this.time = map[DBHelper.courseTimeColumnName];
     this.students = map[DBHelper.courseStudentsColumnName];
+    this.fav = map[DBHelper.courseFavColumnName];
+    this.progress = map[DBHelper.courseProgressColumnName];
   }
 }
