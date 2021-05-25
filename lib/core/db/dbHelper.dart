@@ -90,18 +90,18 @@ class DBHelper {
             $courseProgressColumnName TEXT,
             $courseFavColumnName INTEGER
               );""";
-  createCourseTable(Database database) async {
-    await database.execute(
-        '''CREATE TABLE $courseTableName (
-            $courseIdColumnName TEXT PRIMARY KEY, 
-            $courseNameColumnName TEXT,
-            $courseImageUrlColumnName TEXT,
-            $courseTimeColumnName INTEGER,
-            $courseStudentsColumnName TEXT
-            $courseProgressColumnName TEXT,
-            $courseFavColumnName INTEGER
-              );''');
-  }
+  // createCourseTable(Database database) async {
+  //   await database.execute(
+  //       '''CREATE TABLE $courseTableName (
+  //           $courseIdColumnName TEXT PRIMARY KEY,
+  //           $courseNameColumnName TEXT,
+  //           $courseImageUrlColumnName TEXT,
+  //           $courseTimeColumnName INTEGER,
+  //           $courseStudentsColumnName TEXT
+  //           $courseProgressColumnName TEXT,
+  //           $courseFavColumnName INTEGER
+  //             );''');
+  // }
   createStylesTable(Database database) async {
     await database.execute(
         '''CREATE TABLE $styleTableName (
@@ -140,22 +140,38 @@ class DBHelper {
       await database.insert(courseTableName, course.toJson());
     } catch (e) {}
   }
+  insertStyle(Style style) async {
+    try {
+      Database database = await initDatabase();
+      await database.insert(styleTableName, style.toJson());
+    } catch (e) {}
+  }
+
   Future<List<Course>> getAllCourses()async {
     Database database = await initDatabase();
     List<Map<String, Object>> rows = await database.query(courseTableName);
     List<Course> courses = rows.map((e) => Course.fromMap(e)).toList();
     return courses;
   }
-  Future<Course> getSpecialCourse(String id)async{
+ //  Future<Course> getSpecialCourse(String id)async{
+ //   Database database = await initDatabase();
+ //   List<Map<String, Object>> maps = [];
+ //   Course course;
+ //   maps=await database.query(courseTableName,
+ //       where: '$courseIdColumnName=?', whereArgs: [id]);
+ //   course=Course.fromMap(maps.first);
+ //   return course;
+ // }
+  Future<List<Course>> getFavCourses()async{
    Database database = await initDatabase();
    List<Map<String, Object>> maps = [];
-   Course course;
-   maps=await database.query(courseTableName,
-       where: '$courseIdColumnName=?', whereArgs: [id]);
-   course=Course.fromMap(maps.first);
-   return course;
+   List<Course>courses;
+   maps= await database.query(courseTableName,
+       where: '$courseFavColumnName=?', whereArgs: [1]);
+   courses=maps.map((e) => Course.fromMap(e)).toList();
+   return courses;
  }
-  Future<List<Style>> getSpecialStyle(String courseId)async{
+  Future<List<Style>> getStylesInCourse(String courseId)async{
    Database database = await initDatabase();
    List<Map<String, Object>> maps = [];
    List<Style> styles;
@@ -163,6 +179,15 @@ class DBHelper {
        where: '$styleCourseIdColumnName=?', whereArgs: [courseId]);
    styles=maps.map((e) => Style.fromMap(e)).toList();
    return styles;
+ }
+  Future<Style> getSpecificStyle(String id)async{
+   Database database = await initDatabase();
+   List<Map<String, Object>> maps = [];
+   Style style;
+   maps=await database.query(styleTableName,
+       where: '$styleIdColumnName=?', whereArgs: [id]);
+   style=Style.fromMap(maps.first);
+   return style;
  }
 
   Future<User> selectUser(String email, String password) async {

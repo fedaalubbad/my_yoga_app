@@ -6,10 +6,10 @@ class Course{
    String name;
    int time;
    String students;
-   String fav;
+   int fav;
    String progress;
 
-  Course({this.id,this.imageUrl,this.name,this.time,this.students});
+  Course({this.id,this.imageUrl,this.name,this.time,this.students,this.fav,this.progress});
 
   toJson() {
 

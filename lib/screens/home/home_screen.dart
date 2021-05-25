@@ -36,6 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
      await DBHelper.dbHelper.insertCourse(courses[i]);
     }
   }
+  insertStyles()async{
+    for (int i=0; i < styles.length; i++) {
+      await DBHelper.dbHelper.insertStyle(styles[i]);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed:insertCourses,
+        onPressed:insertStyles,
       ),
     );
   }

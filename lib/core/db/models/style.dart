@@ -6,7 +6,7 @@ class Style{
   String name;
   int time;
   String courseId;
-  String completed;
+  int completed;
 
   Style({this.id,this.imageUrl,this.name,this.time,this.courseId,this.completed});
   toJson() {
