@@ -1,21 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
+import 'package:my_yoga_app/core/db/dbHelper.dart';
 import 'package:my_yoga_app/core/db/models/course.dart';
+import 'package:my_yoga_app/core/db/models/style.dart';
 import 'package:my_yoga_app/core/navigation_service/navigation_service.dart';
 import 'package:my_yoga_app/screens/StylesInCourse/stylesInCourse.dart';
 
 class BuildCourseWidget extends StatelessWidget{
   Course course;
+  List<Style>allStyles;
   BuildCourseWidget(this.course);
-
+  getStyles(String courseId)async{
+    List<Style>styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
+    this.allStyles = styles;
+    return styles;
+  }
   goScreen(){
-    NavigationService.navigationService.navigateToWidget(StylesInCourse(course.name, course.id));
+    NavigationService.navigationService.navigateToWidget(StylesInCourse(course.name,course.id,allStyles));
   }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    getStyles(course.id);
     return InkWell(
       onTap: goScreen,
       child: Padding(

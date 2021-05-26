@@ -10,35 +10,16 @@ import 'package:my_yoga_app/screens/home/components/build_style_widget.dart';
 class StylesInCourse extends StatelessWidget {
   String title;
   String id;
-  StylesInCourse(this.title,this.id);
-  List<Style>Allstyles;
-
-  getStyles(String courseId)async{
-    List<Style>styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
-    Allstyles = styles;
-
-  }
+  List<Style>allStyles;
+  StylesInCourse(this.title,this.id,this.allStyles) ;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Scaffold(
-      appBar: AppBar(title: Text(this.title),leading: IconButton(icon: Icon(Icons.arrow_back_sharp),
+      appBar: AppBar(backgroundColor:secondary,title: Text(this.title),leading: IconButton(icon: Icon(Icons.arrow_back_ios),
         onPressed:()=> Navigator.of(context).pop(),),),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: appPadding, vertical: appPadding),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-
-              ],
-            ),
-          ),
-          Padding(
+      body: Padding(
             padding: const EdgeInsets.only(left: appPadding / 2),
             child: Container(
               height: double.infinity,
@@ -46,14 +27,12 @@ class StylesInCourse extends StatelessWidget {
                   physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   // itemCount: styles.length,
-                  itemCount: styles.length,
+                  itemCount: allStyles.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return BuildStylesWidgete(Allstyles[index]);
+                    return BuildStylesWidgete(allStyles[index]);
                   }),
             ),
           )
-        ],
-      ),
     );
   }
 }

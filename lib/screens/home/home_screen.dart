@@ -6,6 +6,7 @@ import 'package:my_yoga_app/core/db/dbHelper.dart';
 import 'package:my_yoga_app/core/db/models/course.dart';
 import 'package:my_yoga_app/core/db/models/style.dart';
 import 'package:my_yoga_app/data/data.dart';
+import 'package:my_yoga_app/screens/favourits/favourits.dart';
 
 import 'components/courses.dart';
 import 'components/custom_app_bar.dart';
@@ -17,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selsctedIconIndex = 2;
+  int selsctedIconIndex = 1;
   List<Course>allCourses;
 
   getAllCourses()async{
@@ -28,8 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
   List<Style>stylesForBeginner;
+  List<Style>stylesList;
 
-  getStyles(String courseId)async{
+  getStylesForBeginner(String courseId)async{
       List<Style>styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
       this.stylesForBeginner = styles;
 
@@ -37,28 +39,32 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     return styles;
   }
+
+  List<Course>favCourses;
+  getfavoritsCourse()async{
+      List<Course>courses = await DBHelper.dbHelper.getFavCourses();
+      this.favCourses = courses;
+    setState(() {
+    });
+    return favCourses;
+  }
   @override
   void initState() {
     super.initState();
     getAllCourses();
-    getStyles('2');
+    getStylesForBeginner('2');
+    getfavoritsCourse();
   }
   insertCourses() async{
     for (int i=0; i < courses.length; i++) {
      await DBHelper.dbHelper.insertCourse(courses[i]);
     }
-    setState(() {
-
-    });
   }
   insertStyles()async{
     for (int i=0; i < styles.length; i++) {
       await DBHelper.dbHelper.insertStyle(styles[i]);
     }
-    insertCourses();
-    setState(() {
 
-    });
   }
   deleteData()async{
     DBHelper.dbHelper.cleanDatabase();
@@ -74,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       extendBody: true,
-      body: Padding(
+      body:selsctedIconIndex==1? Padding(
          padding: EdgeInsets.only(top:appPadding * 2),
 
          child: Column(
@@ -86,7 +92,10 @@ class _HomeScreenState extends State<HomeScreen> {
              Courses(allCourses),
            ],
          ),
-       ),
+       ): selsctedIconIndex==2?
+          Favorites_Courses(favCourses):
+          Favorites_Courses(favCourses),
+
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
         index: selsctedIconIndex,
@@ -102,15 +111,13 @@ class _HomeScreenState extends State<HomeScreen> {
           milliseconds: 200,
         ),
         items: <Widget>[
-          Icon(Icons.play_arrow_outlined, size: 30,color: selsctedIconIndex == 0 ? white : black,),
-          Icon(Icons.search, size: 30,color: selsctedIconIndex == 1 ? white : black,),
+          Icon(Icons.person_outline, size: 30,color: selsctedIconIndex == 4 ? white : black,),
           Icon(Icons.home_outlined, size: 30,color: selsctedIconIndex == 2 ? white : black,),
           Icon(Icons.favorite_border_outlined, size: 30,color: selsctedIconIndex == 3 ? white : black,),
-          Icon(Icons.person_outline, size: 30,color: selsctedIconIndex == 4 ? white : black,),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed:insertStyles
+        onPressed:insertCourses
       ),
     );
   }

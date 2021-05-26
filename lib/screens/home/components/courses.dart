@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
 import 'package:my_yoga_app/core/db/models/course.dart';
-import 'package:my_yoga_app/core/db/models/style.dart';
-import 'package:my_yoga_app/core/navigation_service/navigation_service.dart';
-import 'package:my_yoga_app/data/data.dart';
-import 'package:my_yoga_app/screens/StylesInCourse/stylesInCourse.dart';
 import 'package:my_yoga_app/screens/home/components/build_course_widget.dart';
 
 
