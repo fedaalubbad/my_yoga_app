@@ -4,7 +4,8 @@ import 'package:my_yoga_app/core/db/models/style.dart';
 
 class BuildStylesWidgete extends StatelessWidget{
   Style style;
-  BuildStylesWidgete(this.style);
+  String from;
+  BuildStylesWidgete(this.style,this.from);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -17,7 +18,7 @@ class BuildStylesWidgete extends StatelessWidget{
           child: Container(
             margin:
             EdgeInsets.only(top: appPadding * 3, bottom: appPadding * 2),
-            width: size.width * 0.4,
+            width:this.from=='home'? size.width * 0.4:size.width,
             height: size.height * 0.2,
             decoration: BoxDecoration(
                 color: white,

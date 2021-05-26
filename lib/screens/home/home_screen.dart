@@ -111,9 +111,9 @@ class _HomeScreenState extends State<HomeScreen> {
           milliseconds: 200,
         ),
         items: <Widget>[
-          Icon(Icons.person_outline, size: 30,color: selsctedIconIndex == 4 ? white : black,),
-          Icon(Icons.home_outlined, size: 30,color: selsctedIconIndex == 2 ? white : black,),
-          Icon(Icons.favorite_border_outlined, size: 30,color: selsctedIconIndex == 3 ? white : black,),
+          Icon(Icons.person_outline, size: 30,color: selsctedIconIndex == 0 ? white : black,),
+          Icon(Icons.home_outlined, size: 30,color: selsctedIconIndex == 1 ? white : black,),
+          Icon(Icons.favorite_border_outlined, size: 30,color: selsctedIconIndex == 2 ? white : black,),
         ],
       ),
       floatingActionButton: FloatingActionButton(

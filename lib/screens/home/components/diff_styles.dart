@@ -49,7 +49,7 @@ class DiffStyles extends StatelessWidget {
                 // itemCount: styles.length,
                 itemCount: styles.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return BuildStylesWidgete(styles[index]);
+                  return BuildStylesWidgete(styles[index],'home');
                 }),
           ),
         )

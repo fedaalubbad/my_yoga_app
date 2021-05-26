@@ -29,7 +29,7 @@ class StylesInCourse extends StatelessWidget {
                   // itemCount: styles.length,
                   itemCount: allStyles.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return BuildStylesWidgete(allStyles[index]);
+                    return BuildStylesWidgete(allStyles[index],'styles');
                   }),
             ),
           )
