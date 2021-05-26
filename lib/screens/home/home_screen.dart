@@ -7,6 +7,7 @@ import 'package:my_yoga_app/core/db/models/course.dart';
 import 'package:my_yoga_app/core/db/models/style.dart';
 import 'package:my_yoga_app/data/data.dart';
 import 'package:my_yoga_app/screens/favourits/favourits.dart';
+import 'package:my_yoga_app/screens/profile/profile.dart';
 
 import 'components/courses.dart';
 import 'components/custom_app_bar.dart';
@@ -94,12 +95,12 @@ class _HomeScreenState extends State<HomeScreen> {
          ),
        ): selsctedIconIndex==2?
           Favorites_Courses(favCourses):
-          Favorites_Courses(favCourses),
+          Profile(),
 
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
         index: selsctedIconIndex,
-        buttonBackgroundColor: primary,
+        buttonBackgroundColor: secondary,
         height: 60.0,
         color: white,
         onTap: (index) {
