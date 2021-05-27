@@ -206,6 +206,16 @@ class DBHelper {
     return style;
   }
 
+  Future<User> getUser(String email) async {
+    Database database = await initDatabase();
+    List<Map<String, Object>> maps = [];
+    User user;
+    maps = await database.query(userTableName,
+        where: '$userEmailColumnName=?', whereArgs: [email]);
+    user = User.fromMap(maps.first);
+    return user;
+  }
+
   completeStyle(Style style) async {
     try {
       Database database = await initDatabase();

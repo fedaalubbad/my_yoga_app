@@ -5,6 +5,8 @@ import 'package:my_yoga_app/constants/constants.dart';
 import 'package:my_yoga_app/core/db/dbHelper.dart';
 import 'package:my_yoga_app/core/db/models/course.dart';
 import 'package:my_yoga_app/core/db/models/style.dart';
+import 'package:my_yoga_app/core/db/models/user.dart';
+import 'package:my_yoga_app/core/sp/sp_helper.dart';
 import 'package:my_yoga_app/data/data.dart';
 import 'package:my_yoga_app/screens/favourits/favourits.dart';
 import 'package:my_yoga_app/screens/profile/profile.dart';
@@ -39,6 +41,16 @@ class HomeScreenState extends State<HomeScreen> {
     setState(() {
     });
     return styles;
+  }
+   var email=SPHelper.spHelper.getEmail();
+  User profile;
+  getUser()async{
+      User user = await DBHelper.dbHelper.getUser(email);
+      this.profile = user;
+
+    setState(() {
+    });
+    return user;
   }
 
   List<Course>favCourses;
@@ -108,7 +120,7 @@ class HomeScreenState extends State<HomeScreen> {
          ),
        ): selsctedIconIndex==2?
           Favorites_Courses(favCourses,LikeButtonTapped):
-          Profile(),
+          Profile(profile),
 
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
@@ -130,9 +142,9 @@ class HomeScreenState extends State<HomeScreen> {
           Icon(Icons.favorite_border_outlined, size: 30,color: selsctedIconIndex == 2 ? white : black,),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed:insertCourses
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed:insertCourses
+      ),
     );
   }
 }

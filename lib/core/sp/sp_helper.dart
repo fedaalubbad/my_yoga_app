@@ -18,7 +18,27 @@ class SPHelper {
   setUserEmail(String email) {
     sharedPreferences.setString('email', email);
   }
+  setUserImage(String image){
+    sharedPreferences.setString('image', image);
 
+  }
+  setUserName(String name){
+    sharedPreferences.setString('name', name);
+  }
+  String getUserImage(){
+    var image = sharedPreferences.get('image');
+    return image;
+  }
+
+  String getUserName(){
+    var name = sharedPreferences.get('name');
+    return name;
+  }
+
+  String getEmail(){
+    var email = sharedPreferences.get('email');
+     return email;
+  }
   bool getUserEmail(String email) {
     var email = sharedPreferences.get('email');
     if (email == null) {

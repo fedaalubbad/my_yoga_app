@@ -8,6 +8,7 @@ import 'build_style_widget.dart';
 
 class DiffStyles extends StatelessWidget {
   List<Style>styles;
+
   DiffStyles(this.styles);
 
 
