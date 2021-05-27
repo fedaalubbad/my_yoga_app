@@ -33,18 +33,17 @@ class LoginCredentials extends StatelessWidget {
 
   validatePass(String pass) {
     if (pass.length < 5) {
-      return 'email is too short';
+      return 'password is too short';
     }
   }
 
   saveForm() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      // SPHelper.spHelper.setUserEmail(email);
      User user= await DBHelper.dbHelper.selectUser(email, password);
-
      if(user==null){
-       print('user not exist');
+       print("user not exist or your data doesn't matched");
+
      }
     }
   }

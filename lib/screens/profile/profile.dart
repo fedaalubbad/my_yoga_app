@@ -104,7 +104,7 @@ class Profile extends StatelessWidget {
                     thickness: 12),
                 pointers: <GaugePointer>[
                   RangePointer(
-                      value: 50,
+                      value: user.progress,
                       cornerStyle: CornerStyle.bothFlat,
                       width: 12,
                       sizeUnit: GaugeSizeUnit.logicalPixel,
@@ -113,7 +113,7 @@ class Profile extends StatelessWidget {
                           colors: <Color>[primary, Colors.blueAccent],
                           stops: <double>[0.25, 0.75])),
                   MarkerPointer(
-                      value: 50,
+                      value: user.progress,
                       // enableDragging: true,
                       // onValueChanged:(v){},
                       markerHeight: 40,
@@ -129,7 +129,7 @@ class Profile extends StatelessWidget {
                       angle: 90,
                       axisValue: 5,
                       positionFactor: 0.1,
-                      widget: Text(50.ceil().toString() + '%',
+                      widget: Text(user.progress.ceil().toString() + '%',
                           style: TextStyle(
                               fontSize: 50,
                               fontWeight: FontWeight.bold,

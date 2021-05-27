@@ -10,7 +10,6 @@ import 'package:my_yoga_app/core/sp/sp_helper.dart';
 import 'package:my_yoga_app/data/data.dart';
 import 'package:my_yoga_app/screens/favourits/favourits.dart';
 import 'package:my_yoga_app/screens/profile/profile.dart';
-
 import 'components/courses.dart';
 import 'components/custom_app_bar.dart';
 import 'components/diff_styles.dart';
@@ -67,6 +66,7 @@ class HomeScreenState extends State<HomeScreen> {
     getAllCourses();
     getStylesForBeginner('2');
     getfavoritsCourse();
+    getUser();
     setState(() {
 
     });
@@ -82,7 +82,7 @@ class HomeScreenState extends State<HomeScreen> {
       await DBHelper.dbHelper.insertStyle(styles[i]);
       await getStylesForBeginner('2');
     }
-    insertCourses();
+    // insertCourses();
 
   }
   deleteData()async{
@@ -143,7 +143,7 @@ class HomeScreenState extends State<HomeScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed:insertCourses
+        onPressed:insertStyles
       ),
     );
   }

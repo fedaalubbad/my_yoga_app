@@ -9,8 +9,11 @@ class CustomTextfield extends StatefulWidget {
   TextInputType type;
   Icon icon;
   String hint;
+  TextEditingController contraller =TextEditingController();
+
+  TextEditingController passwordContraller ;
   CustomTextfield(
-  {this.isPassword = false, this.label, this.save, this.validator,this.icon,this.hint,this.type=TextInputType.text});
+  {this.isPassword = false, this.label, this.save, this.validator,this.icon,this.hint,this.type=TextInputType.text,this.passwordContraller});
 
   @override
   _CustomTextfieldState createState() => _CustomTextfieldState();
@@ -23,6 +26,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
       obscureText: widget.isPassword,
       validator: (value) => widget.validator(value),
       onSaved: (value) => widget.save(value),
+      controller: widget.isPassword?widget.passwordContraller:widget.contraller,
       keyboardType: widget.type,
       decoration: InputDecoration(
           border:

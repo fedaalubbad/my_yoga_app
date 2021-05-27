@@ -25,7 +25,7 @@ class SplashScreenState extends State<SplashScreen>{
       print('isRegister $isRegister');
       if (isRegister) {
         NavigationService.
-           navigationService.routeReplacement(context,HomeScreen());
+           navigationService.routeReplacement(context,LoginScreen());
       } else {
         NavigationService.
         navigationService.routeReplacement(context,LoginScreen());

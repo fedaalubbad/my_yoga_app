@@ -11,6 +11,7 @@ import 'models/user.dart';
 class DBHelper {
   /////user
   static final String userTableName = 'Users';
+  static final String userIdColumnName = 'userId';
   static final String userNameColumnName = 'userName';
   static final String userEmailColumnName = 'userEmail';
   static final String userPasswordColumnName = 'userPassword';
@@ -69,12 +70,12 @@ class DBHelper {
       String databaseName = 'myYoga.db';
       String dbPath = appDocPath + '/$databaseName';
       Database database =
-      await openDatabase(dbPath, version: 4, onCreate: (database, v) async {
+      await openDatabase(dbPath, version: 7, onCreate: (database, v) async {
         await database.execute(CourseTable);
         createUsersTable(database);
         // createCourseTable(database);
         createStylesTable(database);
-        createProductsTable(database);
+        // createProductsTable(database);
       });
       return database;
     } catch (e) {
@@ -85,12 +86,27 @@ class DBHelper {
   createUsersTable(Database database) async {
     await database.execute(
         '''CREATE TABLE $userTableName (
-        $userNameColumnName INTEGER PRIMARY KEY AUTOINCREMENT, 
+        $userIdColumnName INTEGER PRIMARY KEY AUTOINCREMENT, 
+        $userNameColumnName TEXT, 
+        $userImageColumnName TEXT,
+        $userEmailColumnName TEXT,
         $userPasswordColumnName TEXT,
-        $userPasswordColumnName TEXT
+        $userHeightColumnName DOUBLE,
+        $userWeightColumnName DOUBLE,
+        $userProgressColumnName DOUBLE
         );''');
   }
-
+  createStylesTable(Database database) async {
+    await database.execute(
+        '''CREATE TABLE $styleTableName (
+            $styleIdColumnName TEXT PRIMARY KEY, 
+            $styleNameColumnName TEXT,
+            $styleTimeColumnName TEXT,
+            $styleImageUrlColumnName TEXT,
+            $styleCompletedColumnName INTEGER,
+            $styleCourseIdColumnName TEXT
+              );''');
+  }
   static const CourseTable = """CREATE TABLE IF NOT EXISTS $courseTableName (
             $courseIdColumnName TEXT PRIMARY KEY, 
             $courseNameColumnName TEXT,
@@ -121,17 +137,7 @@ class DBHelper {
   //           $styleCompletedColumnName INTEGER,
   //           $styleCourseIdColumnName TEXT
   //             );''';
-  createStylesTable(Database database) async {
-    await database.execute(
-        '''CREATE TABLE $styleTableName (
-            $styleIdColumnName TEXT PRIMARY KEY, 
-            $styleNameColumnName TEXT,
-            $styleTimeColumnName TEXT,
-            $styleImageUrlColumnName TEXT,
-            $styleCompletedColumnName INTEGER,
-            $styleCourseIdColumnName TEXT
-              );''');
-  }
+
 
   createProductsTable(Database database) async {
     await database.execute(
@@ -206,15 +212,6 @@ class DBHelper {
     return style;
   }
 
-  Future<User> getUser(String email) async {
-    Database database = await initDatabase();
-    List<Map<String, Object>> maps = [];
-    User user;
-    maps = await database.query(userTableName,
-        where: '$userEmailColumnName=?', whereArgs: [email]);
-    user = User.fromMap(maps.first);
-    return user;
-  }
 
   completeStyle(Style style) async {
     try {
@@ -256,11 +253,33 @@ class DBHelper {
   insertUser(User user) async {
     try {
       Database database = await initDatabase();
-      await database.insert(userTableName, user.toJson());
-      SPHelper.spHelper.setUserEmail(user.email);
-      NavigationService.navigationService.navigateAndReplaceWidget(
-          HomeScreen());
+      User signUser=await getUser(user.email);
+      if(signUser==null) {
+        await database.insert(userTableName, user.toJson());
+        SPHelper.spHelper.setUserEmail(user.email);
+        SPHelper.spHelper.setUserName(user.name);
+        SPHelper.spHelper.setUserImage(user.image);
+        NavigationService.navigationService.navigateAndReplaceWidget(
+            HomeScreen());
+      }
+      else{
+
+      }
     } catch (e) {}
+  }
+
+  Future<User> getUser(String email) async {
+    Database database = await initDatabase();
+    List<Map<String, Object>> maps = [];
+    User user;
+    maps = await database.query(userTableName,
+        where: '$userEmailColumnName=?', whereArgs: [email]);
+    if (maps.isNotEmpty) {
+      user = User.fromMap(maps.first);
+      return user;
+    }else{
+      return null;
+    }
   }
 
   Future<User> selectUser(String email, String password) async {
@@ -268,11 +287,13 @@ class DBHelper {
     List<Map<String, Object>> maps = [];
     User user;
     maps = await database.query(userTableName,
-        where: '$userNameColumnName=?', whereArgs: [email]);
+        where: '$userEmailColumnName=?', whereArgs: [email]);
     if (maps.isNotEmpty) {
       user = User.fromMap(maps.first);
       if (user.password == password) {
         SPHelper.spHelper.setUserEmail(email);
+        SPHelper.spHelper.setUserName(user.name);
+        SPHelper.spHelper.setUserImage(user.image);
         NavigationService.navigationService
             .navigateAndReplaceWidget(HomeScreen());
         return user;

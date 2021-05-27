@@ -21,7 +21,7 @@ class SignUpScreen extends StatefulWidget{
 class SignUpScreenState extends State<SignUpScreen> {
   String name='',image='assets/images/profile_add.png',email='',password='',confirmPassword='';
       double height=0.0,weight=0.0;
-
+  final _passwordContraller =TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
   File _image;
   final picker=ImagePicker();
@@ -88,8 +88,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   validateMatchPass(String pass) {
     if(pass.length==0){
       return 'enter confirm password!';
-    }
-    else if (pass!=password) {
+    } else if (pass!=_passwordContraller.text) {
       return 'password not matched try again!';
     }
   }
@@ -97,7 +96,10 @@ class SignUpScreenState extends State<SignUpScreen> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       User user=User(name,email,password,image:image, weight:weight, height:height, progress:0.0);
-      DBHelper.dbHelper.insertUser(user);
+      User signedUser=await DBHelper.dbHelper.getUser(email);
+      if(signedUser==null) {
+        await DBHelper.dbHelper.insertUser(user);
+      }
     }
   }
   @override
@@ -198,7 +200,8 @@ class SignUpScreenState extends State<SignUpScreen> {
                     save: savePassword,
                     validator: validatePass,
                     type: TextInputType.visiblePassword,
-                    hint: "password",),
+                    hint: "password",
+                     passwordContraller: _passwordContraller,),
                 ),
                 SizedBox(
                   height: size.height * 0.04,

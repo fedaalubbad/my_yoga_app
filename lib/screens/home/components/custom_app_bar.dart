@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:my_yoga_app/constants/constants.dart';
-
+import 'package:my_yoga_app/core/sp/sp_helper.dart';
 
 class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
     Size size = MediaQuery.of(context).size;
+    String name=SPHelper.spHelper.getUserName();
+    String image=SPHelper.spHelper.getUserImage();
 
     return  Padding(
       padding: EdgeInsets.only(left: 20.0,right: 10.0),
@@ -37,7 +39,7 @@ class CustomAppBar extends StatelessWidget {
                         child: Center(
                           child: CircleAvatar(
                             backgroundImage: AssetImage(
-                              'assets/images/propic.jpeg',
+                              image,
                             ),
                           ),
                         ),
@@ -50,7 +52,7 @@ class CustomAppBar extends StatelessWidget {
                 width: size.width * 0.01,
               ),
               Text(
-                'Tamara Bellis',
+                name,
                 style: TextStyle(color: black, fontWeight: FontWeight.w600,fontSize: 18),
               ),
             ],

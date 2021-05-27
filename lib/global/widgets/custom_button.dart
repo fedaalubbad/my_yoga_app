@@ -10,21 +10,12 @@ class Custom_Button extends StatelessWidget{
   String title;
   Function function;
   Custom_Button(this.title,this.function);
-  login(String email,String password)async{
-    // SPHelper.spHelper.setUserEmail(email);
-    await DBHelper.dbHelper.selectUser(email, password);
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => HomeScreen(),
-    //   ),
-    // );
-  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return InkWell(
-      onTap: () => NavigationService.navigationService.navigateAndReplaceWidget(HomeScreen()),
+      onTap: () => function(),
       child: Material(
           elevation: 10.0,
           shadowColor: primary,
