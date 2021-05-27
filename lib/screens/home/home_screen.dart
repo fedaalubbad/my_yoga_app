@@ -62,12 +62,15 @@ class HomeScreenState extends State<HomeScreen> {
   insertCourses() async{
     for (int i=0; i < courses.length; i++) {
      await DBHelper.dbHelper.insertCourse(courses[i]);
+     await getAllCourses();
     }
   }
   insertStyles()async{
     for (int i=0; i < styles.length; i++) {
       await DBHelper.dbHelper.insertStyle(styles[i]);
+      await getStylesForBeginner('2');
     }
+    insertCourses();
 
   }
   deleteData()async{
@@ -77,13 +80,13 @@ class HomeScreenState extends State<HomeScreen> {
     //
     // });
   }
-  Future<bool> onLikeButtonTapped(bool isLiked,Course course) async {
+  Future<bool> LikeButtonTapped(Course course) async {
     await DBHelper.dbHelper.favCourse(course);
+    await getAllCourses();
+    await getfavoritsCourse();
     setState(() {
 
     });
-    return !isLiked;
-
   }
   @override
   Widget build(BuildContext context) {
@@ -100,11 +103,11 @@ class HomeScreenState extends State<HomeScreen> {
 
              DiffStyles(stylesForBeginner),
 
-             Courses(allCourses,),
+             Courses(allCourses,LikeButtonTapped),
            ],
          ),
        ): selsctedIconIndex==2?
-          Favorites_Courses(favCourses):
+          Favorites_Courses(favCourses,LikeButtonTapped):
           Profile(),
 
       bottomNavigationBar: CurvedNavigationBar(
@@ -132,7 +135,4 @@ class HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-class UserService {
-
 }

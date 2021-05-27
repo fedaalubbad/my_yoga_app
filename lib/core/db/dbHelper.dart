@@ -218,13 +218,14 @@ class DBHelper {
     }
   }
 
-  favCourse(Course course) async {
+  Future<bool> favCourse(Course course) async {
     try {
       Database database = await initDatabase();
       course.fav = !course.fav;
       int updatedRows = await database.update(courseTableName, course.toJson(),
           where: '$courseIdColumnName = ?', whereArgs: [course.id]);
       print(updatedRows);
+      return course.fav;
     } on Exception catch (e) {
       print(e);
     }

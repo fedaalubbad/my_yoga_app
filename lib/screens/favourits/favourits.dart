@@ -6,7 +6,8 @@ import 'package:my_yoga_app/screens/home/components/build_course_widget.dart';
 
 class Favorites_Courses extends StatelessWidget{
   List<Course> courses;
-  Favorites_Courses(this.courses);
+  Function likeFun;
+  Favorites_Courses(this.courses,this.likeFun);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -20,7 +21,7 @@ class Favorites_Courses extends StatelessWidget{
                   // itemCount: styles.length,
                   itemCount: courses.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return BuildCourseWidget(courses[index]);
+                    return BuildCourseWidget(courses[index],likeFun);
                   }),
             ),
 

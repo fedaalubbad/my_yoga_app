@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
@@ -7,7 +9,7 @@ import 'package:my_yoga_app/core/navigation_service/navigation_service.dart';
 import 'package:my_yoga_app/global/custom_textFeild.dart';
 import 'package:my_yoga_app/global/widgets/custom_button.dart';
 import 'package:my_yoga_app/screens/auth/login/login_screen.dart';
-import 'package:my_yoga_app/screens/home/home_screen.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignUpScreen extends StatefulWidget{
   SignUpScreen();
@@ -17,11 +19,25 @@ class SignUpScreen extends StatefulWidget{
   }
 }
 class SignUpScreenState extends State<SignUpScreen> {
-  String name='',image='assets/images/pic1.jpg',email='',password='',confirmPassword='';
+  String name='',image='assets/images/profile_add.png',email='',password='',confirmPassword='';
       double height=0.0,weight=0.0;
 
   GlobalKey<FormState> formKey = GlobalKey();
+  File _image;
+  final picker=ImagePicker();
 
+// تنفذ عند اختيارأو التقاط الصورة
+  Future getImage(ImageSource src) async{
+    final pickedFile= await picker.getImage(source: src);
+    setState(() {
+      if(pickedFile!=null){
+        _image=File(pickedFile.path);
+      }else {
+        print('No Image selected!');
+      }
+    });
+
+  }
   saveName(String value) {
     this.name = value;
   }
@@ -65,7 +81,7 @@ class SignUpScreenState extends State<SignUpScreen> {
 
   validatePass(String pass) {
     if (pass.length < 5) {
-      return 'email is too short!';
+      return 'password is too short!';
     }
   }
 
@@ -93,11 +109,11 @@ class SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       // appBar: AppBar(title: Text("SignUp"),),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: appPadding, vertical: appPadding * 4),
+        padding: const EdgeInsets.only(
+           left: appPadding,right: appPadding,bottom: appPadding/4, top: appPadding*4),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 'Please Sign Up ',
@@ -105,6 +121,20 @@ class SignUpScreenState extends State<SignUpScreen> {
                   fontSize: 24,
                 ),
               ),
+              SizedBox(
+                height: size.height * 0.03,
+              ),
+              InkWell(
+                onTap: showAlert,
+                child: Stack(children: [
+                  CircleAvatar(radius:50,backgroundImage: _image==null?AssetImage(image):FileImage(_image),),
+                  Positioned(
+                    bottom: 3,right: 3,
+                      child: Icon(Icons.add_a_photo_sharp,color: Colors.pink,)
+                  )
+                ],),
+              ),
+
               SizedBox(
                 height: size.height * 0.03,
               ),
@@ -270,5 +300,45 @@ class SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+  //////////////////////////////////////////////////alert to choose image
+showAlert(){
+  var ad =AlertDialog(
+    title: Text('choose image from!'),
+    content: Container(
+      height: 150,
+      child: Column(
+        children: [
+          Divider(color: Colors.black,),
+          Container(
+            width: 300,
+            color: Colors.teal,
+            child: ListTile(
+              title: Text('Gallery'),
+              leading: Icon(Icons.image),
+              onTap: (){
+                Navigator.of(context).pop();
+                getImage(ImageSource.gallery);
+              },
+            ),
+          ),
+          SizedBox(height: 10,),
+          Container(
+            width: 300,
+            color: Colors.teal,
+            child: ListTile(
+              title: Text('Camera'),
+              leading: Icon(Icons.camera_alt),
+              onTap: (){
+                Navigator.of(context).pop();
+                getImage(ImageSource.camera);
+              },
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+  showDialog(builder: (context) => ad, context: context);
+}
 
 }

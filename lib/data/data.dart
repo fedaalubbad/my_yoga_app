@@ -23,7 +23,7 @@ final _legCrossStyle = Style(
   completed:false,
 );
 
-final List<Style>styles = [];
+final List<Style>styles = [_sittingStyle,_sittingStyle,_legCrossStyle];
 
 final _course1 = Course(
     id: '1',
@@ -64,4 +64,4 @@ final _course4 = Course(
     progress: 0,
 );
 
-final List<Course> courses = [_course4];
+final List<Course> courses = [_course1,_course2,_course3];

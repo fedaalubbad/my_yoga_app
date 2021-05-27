@@ -14,10 +14,9 @@ import '../home_screen.dart';
 class BuildCourseWidget extends StatelessWidget {
   Course course;
   List<Style> allStyles;
+  Function likeFunction;
 
-  HomeScreenState homeScreen=new HomeScreenState();
-
-  BuildCourseWidget(this.course);
+  BuildCourseWidget(this.course,this.likeFunction);
 
   getStyles(String courseId) async {
     List<Style> styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
@@ -29,7 +28,10 @@ class BuildCourseWidget extends StatelessWidget {
     NavigationService.navigationService
         .navigateToWidget(StylesInCourse(course.name, course.id, allStyles));
   }
-
+  Future<bool> onLikeButtonTapped(bool isLiked) async{
+    await likeFunction(course);
+    return !isLiked;
+  }
 
 
   @override
@@ -190,7 +192,7 @@ class BuildCourseWidget extends StatelessWidget {
           right: 30,
           bottom: 30,
           child: LikeButton(
-            // onTap: homeScreen.onLikeButtonTapped(course.fav, course),
+            onTap:onLikeButtonTapped,
             size: 35,
             circleColor:
             CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
@@ -199,7 +201,7 @@ class BuildCourseWidget extends StatelessWidget {
               dotSecondaryColor: Color(0xff0099cc),
             ),
             likeBuilder: (bool isLiked) {
-              // isLiked=course.fav;
+              isLiked=course.fav;
               return Icon(
                 Icons.favorite,
                 color: isLiked ? Colors.deepPurpleAccent : Colors.grey,

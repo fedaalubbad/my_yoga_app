@@ -6,7 +6,8 @@ import 'package:my_yoga_app/screens/home/components/build_course_widget.dart';
 
 class Courses extends StatelessWidget {
   List<Course>coursesList;
-  Courses(this.coursesList);
+  Function likeFunction;
+  Courses(this.coursesList,this.likeFunction);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class Courses extends StatelessWidget {
                 // itemCount: courses.length,
                 itemCount: coursesList.length,
                 itemBuilder: (context, index) {
-                  return BuildCourseWidget(coursesList[index]);
+                  return BuildCourseWidget(coursesList[index],likeFunction);
                 },
               ))
         ],

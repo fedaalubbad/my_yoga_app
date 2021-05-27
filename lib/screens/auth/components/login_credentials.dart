@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
 import 'package:my_yoga_app/core/db/dbHelper.dart';
+import 'package:my_yoga_app/core/db/models/user.dart';
 import 'package:my_yoga_app/core/navigation_service/navigation_service.dart';
 import 'package:my_yoga_app/core/sp/sp_helper.dart';
 import 'package:my_yoga_app/global/custom_textFeild.dart';
@@ -40,7 +41,11 @@ class LoginCredentials extends StatelessWidget {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       // SPHelper.spHelper.setUserEmail(email);
-      DBHelper.dbHelper.selectUser(email, password);
+     User user= await DBHelper.dbHelper.selectUser(email, password);
+
+     if(user==null){
+       print('user not exist');
+     }
     }
   }
 
