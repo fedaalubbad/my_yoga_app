@@ -2,25 +2,27 @@
 import '../dbHelper.dart';
 
 class User {
+	String name;
 	String email;
 	String password;
 	String image;
 	double progress;
 	double weight;
 	double height;
-	User(this.email, this.password,this.image,this.weight,this.height,this.progress);
-
+	User(this.name,this.email, this.password,{this.image='assets/images/pic1.jpg',this.weight=0.0,this.height=0.0,this.progress=0.0});
 	User.fromMap(Map map) {
-		this.email = map[DBHelper.userNameColumnName];
+		this.name = map[DBHelper.userNameColumnName];
+		this.email = map[DBHelper.userEmailColumnName];
 		this.password = map[DBHelper.userPasswordColumnName];
 		this.image = map[DBHelper.userImageColumnName];
 		this.weight = map[DBHelper.userWeightColumnName];
 		this.height = map[DBHelper.userHeightColumnName];
 		this.progress = map[DBHelper.userProgressColumnName];
-	}
+	         }
 	toJson() {
 		return {
-			DBHelper.userNameColumnName: this.email,
+			DBHelper.userNameColumnName: this.name,
+			DBHelper.userEmailColumnName: this.email,
 			DBHelper.userPasswordColumnName: this.password,
 			DBHelper.userImageColumnName: this.image,
 			DBHelper.userWeightColumnName: this.weight,

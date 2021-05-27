@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
 import 'package:my_yoga_app/core/db/dbHelper.dart';
+import 'package:my_yoga_app/core/db/models/user.dart';
 
 class Custom_Button extends StatelessWidget{
   String title;
@@ -21,7 +22,7 @@ class Custom_Button extends StatelessWidget{
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return InkWell(
-      onTap: () => function,
+      onTap: () => function(),
       child: Material(
           elevation: 10.0,
           shadowColor: primary,

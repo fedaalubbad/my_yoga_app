@@ -50,86 +50,102 @@ class LoginCredentials extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: appPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Please Log In',
-            style: TextStyle(
-              fontSize: 24,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Please Log In',
+              style: TextStyle(
+                fontSize: 24,
+              ),
             ),
-          ),
-          SizedBox(
-            height: size.height * 0.03,
-          ),
-          Form(
-            key: formKey,
-            child: Column(
-              children: [
-                Material(
-                  elevation: 10.0,
-                  color: white,
-                  borderRadius: BorderRadius.circular(30.0),
-                  child: CustomTextfield(
-                      isPassword: false,
-                      label: email,
-                      save: saveEmail,
-                      validator: validateEmail,
-                      hint:' Email',
-                      icon: Icon(Icons.email)),
-                ),
-                SizedBox(
-                  height: size.height * 0.04,
-                ),
-                Material(
-                  elevation: 10.0,
-                  color: white,
-                  borderRadius: BorderRadius.circular(30.0),
-                  child: CustomTextfield(
-                      isPassword: true,
-                      label: password,
-                      save: savePassword,
-                      validator: validatePass,
-                      hint: 'password',
-                      type: TextInputType.visiblePassword,),
-                ),
-              ],
+            SizedBox(
+              height: size.height * 0.03,
             ),
-          ),
-          SizedBox(
-            height: size.height * 0.04,
-          ),
-          Container(
-            child: Text(
-              'Forget Password!',
-              style: TextStyle(fontSize: 16, color: Colors.blueAccent),
-            ),
-          ),
-          SizedBox(
-            height: size.height * 0.04,
-          ),
-          Custom_Button('Log In', saveForm),
-          SizedBox(
-            height: size.height * 0.04,
-          ),
-          Container(
-            child: RichText(
-              text: TextSpan(
-                  text: "you haven't any account yet!",
-                  style: TextStyle(fontSize: 14, color: Colors.black),
-                  children: [
-                    TextSpan(
-                      text: "Sign Up",
-                      style: TextStyle(fontSize: 14, color: Colors.blueAccent),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          gotoSign();
-                        },
+            Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('enter your email',style: TextStyle(color: primary),),
+                  SizedBox(
+                    height: size.height * 0.01,
+                  ),
+                  Material(
+                    elevation: 10.0,
+                    color: white,
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: CustomTextfield(
+                        isPassword: false,
+                        label: email,
+                        save: saveEmail,
+                        validator: validateEmail,
+                        hint:' Email',
+                        icon: Icon(Icons.email),
+                      type: TextInputType.emailAddress,),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.04,
+                  ),
+                  Text('enter your password',style: TextStyle(color: primary),),
+                  SizedBox(
+                    height: size.height * 0.01,
+                  ),
+                  Material(
+                    elevation: 10.0,
+                    color: white,
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: CustomTextfield(
+                        isPassword: true,
+                        label: password,
+                        save: savePassword,
+                        validator: validatePass,
+                        hint: 'password',
+                        type: TextInputType.visiblePassword,
                     ),
-                  ]),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            SizedBox(
+              height: size.height * 0.04,
+            ),
+            Container(
+              child: Text(
+                'Forget Password!',
+                style: TextStyle(fontSize: 16, color: Colors.blueAccent),
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.02,
+            ),
+            Custom_Button('Log In', saveForm),
+            SizedBox(
+              height: size.height * 0.02,
+            ),
+            Container(
+              child: RichText(
+                text: TextSpan(
+                    text: "you haven't any account yet!",
+                    style: TextStyle(fontSize: 14, color: Colors.black),
+                    children: [
+                      TextSpan(
+                        text: "Sign Up",
+                        style: TextStyle(fontSize: 16, color: Colors.blueAccent),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            gotoSign();
+                          },
+                      ),
+                    ]),
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.04,
+            ),
+          ],
+        ),
       ),
     );
   }
