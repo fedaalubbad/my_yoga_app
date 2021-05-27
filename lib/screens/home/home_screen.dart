@@ -15,10 +15,10 @@ import 'components/diff_styles.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   int selsctedIconIndex = 1;
   List<Course>allCourses;
 
@@ -55,6 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
     getAllCourses();
     getStylesForBeginner('2');
     getfavoritsCourse();
+    setState(() {
+
+    });
   }
   insertCourses() async{
     for (int i=0; i < courses.length; i++) {
@@ -74,7 +77,14 @@ class _HomeScreenState extends State<HomeScreen> {
     //
     // });
   }
+  Future<bool> onLikeButtonTapped(bool isLiked,Course course) async {
+    await DBHelper.dbHelper.favCourse(course);
+    setState(() {
 
+    });
+    return !isLiked;
+
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -90,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
              DiffStyles(stylesForBeginner),
 
-             Courses(allCourses),
+             Courses(allCourses,),
            ],
          ),
        ): selsctedIconIndex==2?
@@ -122,4 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+class UserService {
+
 }

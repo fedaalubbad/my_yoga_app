@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
-import 'package:my_yoga_app/core/db/dbHelper.dart';
 import 'package:my_yoga_app/core/db/models/style.dart';
-import 'package:my_yoga_app/core/navigation_service/navigation_service.dart';
-import 'package:my_yoga_app/data/data.dart';
 import 'package:my_yoga_app/screens/home/components/build_style_widget.dart';
 
 

@@ -14,6 +14,9 @@ class DBHelper {
   static final String userNameColumnName = 'userName';
   static final String userPasswordColumnName = 'userPassword';
   static final String userImageColumnName = 'userImage';
+  static final String userHeightColumnName = 'userHeight';
+  static final String userWeightColumnName = 'userWeight';
+  static final String userProgressColumnName = 'userProgress';
 
   /////product
   static final String productsTableName = 'Products';
