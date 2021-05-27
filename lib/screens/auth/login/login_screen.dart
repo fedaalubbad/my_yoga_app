@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_yoga_app/core/db/dbHelper.dart';
 import 'package:my_yoga_app/screens/auth/signup/sign_up.dart';
 import 'package:my_yoga_app/screens/home/home_screen.dart';
 import '../components/background_image_clipper.dart';
@@ -7,6 +8,8 @@ import '../components/login_credentials.dart';
 
 
 class LoginScreen extends StatefulWidget {
+  String email;
+  String password;
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -22,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 BackgroundImage(),
-                LoginCredentials(login),
+                LoginCredentials(),
 
               ],
             ),
@@ -32,15 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-  login(){
-    // SPHelper.spHelper.setUserEmail(email);
-    // DBHelper.dbHelper.insertUser(user);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => HomeScreen(),
-      ),
-    );
-  }
+
 
 }

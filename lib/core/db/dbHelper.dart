@@ -205,7 +205,7 @@ class DBHelper {
     return style;
   }
 
-  updateStyle(Style style) async {
+  completeStyle(Style style) async {
     try {
       Database database = await initDatabase();
       style.completed = !style.completed;
@@ -263,6 +263,7 @@ class DBHelper {
         SPHelper.spHelper.setUserEmail(email);
         NavigationService.navigationService
             .navigateAndReplaceWidget(HomeScreen());
+        return user;
       } else {
         return null;
         print('wrong pass');

@@ -1,16 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
+import 'package:my_yoga_app/core/db/dbHelper.dart';
 
 class Custom_Button extends StatelessWidget{
   String title;
   Function function;
   Custom_Button(this.title,this.function);
+  login(String email,String password)async{
+    // SPHelper.spHelper.setUserEmail(email);
+    await DBHelper.dbHelper.selectUser(email, password);
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => HomeScreen(),
+    //   ),
+    // );
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return InkWell(
-      onTap: () => function(),
+      onTap: () => function,
       child: Material(
           elevation: 10.0,
           shadowColor: primary,

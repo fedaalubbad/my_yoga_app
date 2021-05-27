@@ -1,18 +1,51 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
+import 'package:my_yoga_app/core/db/dbHelper.dart';
 import 'package:my_yoga_app/core/navigation_service/navigation_service.dart';
+import 'package:my_yoga_app/core/sp/sp_helper.dart';
+import 'package:my_yoga_app/global/custom_textFeild.dart';
 import 'package:my_yoga_app/global/widgets/custom_button.dart';
 import 'package:my_yoga_app/screens/auth/signup/sign_up.dart';
 
-
-
 class LoginCredentials extends StatelessWidget {
-  Function function;
-  LoginCredentials(this.function);
+  String email;
+  String password;
+  LoginCredentials();
+  GlobalKey<FormState> formKey = GlobalKey();
+
+  saveEmail(String value) {
+    this.email = value;
+  }
+
+  savePassword(String value) {
+    this.password = value;
+  }
+
+  validateEmail(String email) {
+    if (email.length < 5) {
+      return 'email is too short';
+    } else if (!email.contains('@')) {
+      return 'wrong email syntax';
+    }
+  }
+
+  validatePass(String pass) {
+    if (pass.length < 5) {
+      return 'email is too short';
+    }
+  }
+
+  saveForm() async {
+    if (formKey.currentState.validate()) {
+      formKey.currentState.save();
+      // SPHelper.spHelper.setUserEmail(email);
+      DBHelper.dbHelper.selectUser(email, password);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
 
     return Padding(
@@ -29,51 +62,38 @@ class LoginCredentials extends StatelessWidget {
           SizedBox(
             height: size.height * 0.03,
           ),
-          Material(
-            elevation: 10.0,
-            color: white,
-            borderRadius: BorderRadius.circular(30.0),
-            child: TextField(
-              decoration: InputDecoration(
-                border:
-                OutlineInputBorder(borderSide: BorderSide.none),
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: appPadding * 0.75,
-                    horizontal: appPadding),
-                fillColor: white,
-                hintText: 'Email',
-                suffixIcon: Icon(
-                  Icons.email_rounded,
-                  size: 25.0,
-                  color: blueGrey.withOpacity(0.7),
+          Form(
+            key: formKey,
+            child: Column(
+              children: [
+                Material(
+                  elevation: 10.0,
+                  color: white,
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: CustomTextfield(
+                      isPassword: false,
+                      label: email,
+                      save: saveEmail,
+                      validator: validateEmail,
+                      hint:' Email',
+                      icon: Icon(Icons.email)),
                 ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: size.height * 0.04,
-          ),
-          Material(
-            elevation: 10.0,
-            color: white,
-            borderRadius: BorderRadius.circular(30.0),
-            child: TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                border:
-                OutlineInputBorder(borderSide: BorderSide.none),
-                contentPadding: EdgeInsets.symmetric(
-                    vertical: appPadding * 0.75,
-                    horizontal: appPadding),
-                fillColor: Colors.white,
-                hintText: 'Password',
-                suffixIcon: Icon(
-                  // Icons.lock_outline,
-                  Icons.lock_rounded,
-                  size: 25.0,
-                  color: blueGrey.withOpacity(0.7),
+                SizedBox(
+                  height: size.height * 0.04,
                 ),
-              ),
+                Material(
+                  elevation: 10.0,
+                  color: white,
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: CustomTextfield(
+                      isPassword: true,
+                      label: password,
+                      save: savePassword,
+                      validator: validatePass,
+                      hint: 'password',
+                      type: TextInputType.visiblePassword,),
+                ),
+              ],
             ),
           ),
           SizedBox(
@@ -82,37 +102,40 @@ class LoginCredentials extends StatelessWidget {
           Container(
             child: Text(
               'Forget Password!',
-              style: TextStyle(
-                  fontSize: 16, color: Colors.blueAccent),
+              style: TextStyle(fontSize: 16, color: Colors.blueAccent),
             ),
           ),
           SizedBox(
             height: size.height * 0.04,
           ),
-          Custom_Button('Log In',function),
+          Custom_Button('Log In', saveForm),
           SizedBox(
             height: size.height * 0.04,
           ),
           Container(
-            child: RichText
-              (text:TextSpan(text:"you haven't any account yet!",style:TextStyle(
-                fontSize: 14, color: Colors.black),children: [
-              TextSpan(text:"Sign Up",style:TextStyle(
-                  fontSize: 14, color: Colors.blueAccent),
-                recognizer:TapGestureRecognizer()..onTap = () {
-                  gotoSign();
-                },
-              ),
-            ]),
+            child: RichText(
+              text: TextSpan(
+                  text: "you haven't any account yet!",
+                  style: TextStyle(fontSize: 14, color: Colors.black),
+                  children: [
+                    TextSpan(
+                      text: "Sign Up",
+                      style: TextStyle(fontSize: 14, color: Colors.blueAccent),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          gotoSign();
+                        },
+                    ),
+                  ]),
             ),
           ),
         ],
       ),
     );
-
-  }
-  gotoSign(){
-    NavigationService.navigationService.navigateAndReplaceWidget(SignUpScreen());
   }
 
+  gotoSign() {
+    NavigationService.navigationService
+        .navigateAndReplaceWidget(SignUpScreen());
+  }
 }
