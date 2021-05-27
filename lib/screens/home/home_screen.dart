@@ -130,9 +130,9 @@ class HomeScreenState extends State<HomeScreen> {
           Icon(Icons.favorite_border_outlined, size: 30,color: selsctedIconIndex == 2 ? white : black,),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed:insertCourses
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed:insertCourses
+      // ),
     );
   }
 }

@@ -23,7 +23,7 @@ final _legCrossStyle = Style(
   completed:false,
 );
 
-final List<Style>styles = [_sittingStyle,_sittingStyle,_legCrossStyle];
+final List<Style>styles = [_standStyle,_sittingStyle,_legCrossStyle];
 
 final _course1 = Course(
     id: '1',
@@ -45,6 +45,7 @@ final _course3 = Course(
     fav:false,
     progress: 0,
 );
+
 final _course2 = Course(
     id: "3",
     imageUrl: 'assets/images/course2.jpg',
@@ -63,5 +64,23 @@ final _course4 = Course(
     fav:true,
     progress: 0,
 );
+final _course5 = Course(
+    id: "4",
+    imageUrl: 'assets/images/pic2.jpg',
+    name: 'Daily Yoga',
+    time: 30,
+    students: 'Intermediate',
+    fav:true,
+    progress: 0,
+);
+final _course6 = Course(
+    id: "4",
+    imageUrl: 'assets/images/pic3.jpg',
+    name: 'Daily Yoga',
+    time: 30,
+    students: 'Intermediate',
+    fav:true,
+    progress: 0,
+);
 
-final List<Course> courses = [_course1,_course2,_course3];
+final List<Course> courses = [_course1,_course2,_course3,_course4,_course5,_course6];
