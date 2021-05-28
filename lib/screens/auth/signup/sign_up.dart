@@ -10,6 +10,7 @@ import 'package:my_yoga_app/global/custom_textFeild.dart';
 import 'package:my_yoga_app/global/widgets/custom_button.dart';
 import 'package:my_yoga_app/screens/auth/login/login_screen.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:toast/toast.dart';
 
 class SignUpScreen extends StatefulWidget{
   SignUpScreen();
@@ -19,28 +20,34 @@ class SignUpScreen extends StatefulWidget{
   }
 }
 class SignUpScreenState extends State<SignUpScreen> {
-  String name='',image='assets/images/profile_add.png',email='',password='',confirmPassword='';
-      double height=0.0,weight=0.0;
-  final _passwordContraller =TextEditingController();
+  String name = '',
+      image = 'assets/images/profile_add.png',
+      email = '',
+      password = '',
+      confirmPassword = '';
+  double height = 0.0,
+      weight = 0.0;
+  final _passwordContraller = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
   File _image;
-  final picker=ImagePicker();
+  final picker = ImagePicker();
 
 // تنفذ عند اختيارأو التقاط الصورة
-  Future getImage(ImageSource src) async{
-    final pickedFile= await picker.getImage(source: src);
+  Future getImage(ImageSource src) async {
+    final pickedFile = await picker.getImage(source: src);
     setState(() {
-      if(pickedFile!=null){
-        _image=File(pickedFile.path);
-      }else {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
         print('No Image selected!');
       }
     });
-
   }
+
   saveName(String value) {
     this.name = value;
   }
+
   saveEmail(String value) {
     this.email = value;
   }
@@ -48,6 +55,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   savePassword(String value) {
     this.password = value;
   }
+
   saveConfirmPassword(String value) {
     this.confirmPassword = value;
   }
@@ -55,9 +63,11 @@ class SignUpScreenState extends State<SignUpScreen> {
   saveImage(String value) {
     this.image = value;
   }
+
   saveHeight(double value) {
     this.height = value;
   }
+
   saveWeight(double value) {
     this.weight = value;
   }
@@ -86,22 +96,38 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 
   validateMatchPass(String pass) {
-    if(pass.length==0){
+    if (pass.length == 0) {
       return 'enter confirm password!';
-    } else if (pass!=_passwordContraller.text) {
+    } else if (pass != _passwordContraller.text) {
       return 'password not matched try again!';
     }
   }
-  saveForm() async {
+
+  saveForm(BuildContext context) async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      User user=User(name,email,password,image:image, weight:weight, height:height, progress:0.0);
-      User signedUser=await DBHelper.dbHelper.getUser(email);
-      if(signedUser==null) {
+      User user = User(name, email, password, image: image,
+          weight: weight,
+          height: height,
+          progress: 0.0);
+      User signedUser = await DBHelper.dbHelper.getUser(email);
+      if (signedUser == null) {
         await DBHelper.dbHelper.insertUser(user);
+      }else{
+        buildToast('user is already exist try again!', context);
       }
     }
   }
+
+  void buildToast(String msg,BuildContext context) =>
+      Toast.show(msg, context,
+          duration: Toast.LENGTH_LONG,
+          textColor: Colors.red,
+          backgroundColor: Colors.amber,
+          backgroundRadius: 5,
+          gravity: Toast.CENTER);
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery

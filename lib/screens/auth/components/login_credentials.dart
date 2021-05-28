@@ -8,6 +8,7 @@ import 'package:my_yoga_app/core/sp/sp_helper.dart';
 import 'package:my_yoga_app/global/custom_textFeild.dart';
 import 'package:my_yoga_app/global/widgets/custom_button.dart';
 import 'package:my_yoga_app/screens/auth/signup/sign_up.dart';
+import 'package:toast/toast.dart';
 
 class LoginCredentials extends StatelessWidget {
   String email;
@@ -37,16 +38,24 @@ class LoginCredentials extends StatelessWidget {
     }
   }
 
-  saveForm() async {
+  saveForm(BuildContext context) async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
      User user= await DBHelper.dbHelper.selectUser(email, password);
      if(user==null){
-       print("user not exist or your data doesn't matched");
+       // print("user not exist or your data doesn't matched");
+       buildToast("user not found or data doesn't matches!", context);
 
      }
     }
   }
+  void buildToast(String msg,BuildContext context) =>
+      Toast.show(msg, context,
+          duration: Toast.LENGTH_LONG,
+          textColor: Colors.red,
+          backgroundColor: Colors.amber,
+          backgroundRadius: 5,
+          gravity: Toast.CENTER);
 
   @override
   Widget build(BuildContext context) {

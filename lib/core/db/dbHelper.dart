@@ -192,6 +192,16 @@ class DBHelper {
     return courses;
   }
 
+  Future<int> getCompletedCourses() async {
+    Database database = await initDatabase();
+    List<Map<String, Object>> maps = [];
+    List<Course>courses;
+    maps = await database.query(courseTableName,
+        where: '$courseProgressColumnName=?', whereArgs: [100]);
+    courses = maps.map((e) => Course.fromMap(e)).toList();
+    return courses.length;
+  }
+
   Future<List<Style>> getStylesInCourse(String courseId) async {
     Database database = await initDatabase();
     List<Map<String, Object>> maps = [];

@@ -33,6 +33,22 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
     _progressDone = false;
     initAnimationController();
   }
+  // void buildSnackBar() {
+  //   final sBar = SnackBar(
+  //     content: Text('you deleted appbar title'),
+  //     backgroundColor: Colors.amber,
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.circular(20),
+  //     ),
+  //     duration: Duration(seconds: 8),
+  //     action: SnackBarAction(
+  //       label: 'undo!',
+  //       textColor: Colors.black,
+  //       onPressed: null,
+  //     ),
+  //   );
+  //   _x.currentState.showSnackBar(sBar);
+  // }
 
   initAnimationController() {
     _progressAnimationController = AnimationController(vsync:this,
@@ -126,7 +142,9 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final _x = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: _x,
       appBar: AppBar(
         title: Text(widget.style.name),
         backgroundColor: secondary,

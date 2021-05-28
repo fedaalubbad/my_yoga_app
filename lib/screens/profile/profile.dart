@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
+import 'package:my_yoga_app/core/db/dbHelper.dart';
 import 'package:my_yoga_app/core/db/models/user.dart';
 import 'package:syncfusion\_flutter\_gauges/gauges.dart';
 
 class Profile extends StatelessWidget {
   User user;
+  double progress;
   Profile(this.user);
+  getUserProgress()async{
+   int completed= await DBHelper.dbHelper.getCompletedCourses();
+   progress= completed.toDouble()*10;
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
