@@ -9,8 +9,8 @@ import 'package:my_yoga_app/global/progress_painter.dart';
 
 class StyleDetails extends StatefulWidget {
   Style style;
-  Function updateCourseProgress,completeStyle;
-  StyleDetails(this.style,this.updateCourseProgress,this.completeStyle);
+  Function updateCourseProgress,completeStyle,getStyles;
+  StyleDetails(this.style,this.updateCourseProgress,this.completeStyle,{this.getStyles});
   @override
   _StyleDetailsState createState() {
     return _StyleDetailsState();
@@ -65,6 +65,7 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
           widget.updateCourseProgress(widget.style);
         }
         widget.completeStyle(widget.style);
+        widget.getStyles(widget.style.courseId);
       });
     }
   }

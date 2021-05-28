@@ -7,12 +7,12 @@ import 'package:my_yoga_app/screens/style_details/style_details.dart';
 class BuildStylesWidgete extends StatelessWidget{
   Style style;
   String from;
-  Function updateCourseProgress,completeStyle;
-  BuildStylesWidgete(this.style,this.from,this.updateCourseProgress,this.completeStyle);
+  Function updateCourseProgress,completeStyle,getStyles;
+  BuildStylesWidgete(this.style,this.from,this.updateCourseProgress,this.completeStyle,{this.getStyles});
 
   goScreen() {
     NavigationService.navigationService
-        .navigateToWidget(StyleDetails(style,updateCourseProgress,completeStyle));
+        .navigateToWidget(StyleDetails(style,updateCourseProgress,completeStyle,getStyles:getStyles));
   }
 
   @override

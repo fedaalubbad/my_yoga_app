@@ -17,13 +17,11 @@ class BackgroundImage extends StatelessWidget {
         color: blueGrey.withOpacity(0.8),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-              horizontal: appPadding / 2,
-              vertical: appPadding * 3),
-          child: Center(
+              horizontal: 0.0,
+              vertical: 0.0),
             child: Image(
               image: AssetImage('assets/images/pic2.jpg'),
               fit: BoxFit.cover,
-            ),
           ),
         ),
       ),

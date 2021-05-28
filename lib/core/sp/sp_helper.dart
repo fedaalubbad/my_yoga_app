@@ -1,4 +1,5 @@
 import 'package:my_yoga_app/core/navigation_service/navigation_service.dart';
+import 'package:my_yoga_app/screens/auth/login/login_screen.dart';
 import 'package:my_yoga_app/screens/splash/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,7 +15,12 @@ class SPHelper {
       return sharedPreferences;
     }
   }
-
+   setFirstLogin(bool isFirst){
+     sharedPreferences.setBool('firstLog',isFirst);
+   }
+   bool getFirstLogin(){
+     return sharedPreferences.getBool('firstLog');
+   }
   setUserEmail(String email) {
     sharedPreferences.setString('email', email);
   }
@@ -51,19 +57,21 @@ class SPHelper {
   logOut() async {
     await sharedPreferences.clear();
     NavigationService.navigationService
-        .navigateAndReplaceWidget(SplashScreen());
+        .navigateAndReplaceWidget(LoginScreen());
   }
-  setDataInSharedPreference(){
-    sharedPreferences.setBool('firstOpen', true);
-  }
-
-  bool getDataFromSharedPreference(){
-
-    bool firstOpen=sharedPreferences.getBool('firstOpen') == null?? false;
-    return firstOpen;
-  }
+  // setDataInSharedPreference(){
+  //   sharedPreferences.setBool('firstOpen', true);
+  // }
+  //
+  // bool getDataFromSharedPreference(){
+  //
+  //   bool firstOpen=sharedPreferences.getBool('firstOpen') == null?? false;
+  //   return firstOpen;
+  // }
 
   deleteValue(){
-    sharedPreferences.remove('firstOpen');
+    sharedPreferences.remove('email');
+    sharedPreferences.remove('name');
+    sharedPreferences.remove('image');
   }
 }

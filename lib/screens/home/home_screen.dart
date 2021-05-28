@@ -7,6 +7,8 @@ import 'package:my_yoga_app/core/db/models/course.dart';
 import 'package:my_yoga_app/core/db/models/style.dart';
 import 'package:my_yoga_app/core/db/models/user.dart';
 import 'package:my_yoga_app/core/sp/sp_helper.dart';
+import 'package:my_yoga_app/core/sp/sp_helper.dart';
+import 'package:my_yoga_app/core/sp/sp_helper.dart';
 import 'package:my_yoga_app/data/data.dart';
 import 'package:my_yoga_app/screens/favourits/favourits.dart';
 import 'package:my_yoga_app/screens/profile/profile.dart';
@@ -20,13 +22,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+
+  bool isFirstLog = SPHelper.spHelper.getFirstLogin();
+  @override
+  void initState() {
+    super.initState();
+    if (isFirstLog){
+      print('firstLog$isFirstLog');
+      deleteData();
+      insertStyles();
+      insertCourses();
+    }
+    getAllCourses();
+    getStylesForBeginner('2');
+    getfavoritsCourse();
+    getUser();
+    setState(() {
+    });
+  }
+
   int selsctedIconIndex = 1;
   List<Course>allCourses;
-
   getAllCourses()async{
       List<Course>courses = await DBHelper.dbHelper.getAllCourses();
       this.allCourses = courses;
-
     setState(() {
     });
   }
@@ -60,17 +79,8 @@ class HomeScreenState extends State<HomeScreen> {
     });
     return favCourses;
   }
-  @override
-  void initState() {
-    super.initState();
-    getAllCourses();
-    getStylesForBeginner('2');
-    getfavoritsCourse();
-    getUser();
-    setState(() {
 
-    });
-  }
+
   insertCourses() async{
     for (int i=0; i < courses.length; i++) {
      await DBHelper.dbHelper.insertCourse(courses[i]);
@@ -82,11 +92,9 @@ class HomeScreenState extends State<HomeScreen> {
       await DBHelper.dbHelper.insertStyle(styles[i]);
       await getStylesForBeginner('2');
     }
-    // insertCourses();
-
   }
   deleteData()async{
-    DBHelper.dbHelper.cleanDatabase();
+   await DBHelper.dbHelper.cleanDatabase();
     // DBHelper.dbHelper.deleteTable();
     // setState(() {
     //
@@ -109,6 +117,12 @@ class HomeScreenState extends State<HomeScreen> {
     await getAllCourses();
     await getfavoritsCourse();
   }
+  // List<Style> allStylesInCourse;
+  // getStylesInCourse(String courseId) async {
+  //   List<Style> styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
+  //   allStylesInCourse = styles;
+  //   return styles;
+  // }
   @override
   Widget build(BuildContext context) {
 
@@ -151,9 +165,9 @@ class HomeScreenState extends State<HomeScreen> {
           Icon(Icons.favorite_border_outlined, size: 30,color: selsctedIconIndex == 2 ? white : black,),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed:insertStyles
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed:insertStyles
+      // ),
     );
   }
 }

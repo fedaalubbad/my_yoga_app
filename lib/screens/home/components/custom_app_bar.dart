@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:my_yoga_app/constants/constants.dart';
+import 'package:my_yoga_app/core/navigation_service/navigation_service.dart';
 import 'package:my_yoga_app/core/sp/sp_helper.dart';
+import 'package:my_yoga_app/screens/auth/login/login_screen.dart';
 
 class CustomAppBar extends StatelessWidget {
   @override
@@ -12,6 +14,9 @@ class CustomAppBar extends StatelessWidget {
     String name=SPHelper.spHelper.getUserName();
     String image=SPHelper.spHelper.getUserImage();
 
+    logOut(){
+      SPHelper.spHelper.logOut();
+       }
     return  Padding(
       padding: EdgeInsets.only(left: 20.0,right: 10.0),
       child: Row(
@@ -62,11 +67,14 @@ class CustomAppBar extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Icon(
-                    Icons.logout,
-                    size: 20.0,
-                    color:primary ,
+                  InkWell(
+                    onTap: logOut,
+                    child: Icon(
+                      Icons.logout,
+                      size: 20.0,
+                      color:primary ,
 
+                    ),
                   ),
                   // Container(
                   //   decoration: BoxDecoration(

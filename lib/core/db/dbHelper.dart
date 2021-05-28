@@ -263,6 +263,7 @@ class DBHelper {
       User signUser=await getUser(user.email);
       if(signUser==null) {
         await database.insert(userTableName, user.toJson());
+        SPHelper.spHelper. setFirstLogin(true);
         SPHelper.spHelper.setUserEmail(user.email);
         SPHelper.spHelper.setUserName(user.name);
         SPHelper.spHelper.setUserImage(user.image);
@@ -301,6 +302,7 @@ class DBHelper {
         SPHelper.spHelper.setUserEmail(email);
         SPHelper.spHelper.setUserName(user.name);
         SPHelper.spHelper.setUserImage(user.image);
+        SPHelper.spHelper. setFirstLogin(false);
         NavigationService.navigationService
             .navigateAndReplaceWidget(HomeScreen());
         return user;
@@ -319,7 +321,7 @@ class DBHelper {
       Database database = await initDatabase();
       await database.transaction((txn) async {
         var batch = txn.batch();
-        // batch.delete(courseTableName);
+        batch.delete(courseTableName);
         batch.delete(styleTableName);
 
         await batch.commit();
