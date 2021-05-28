@@ -79,7 +79,7 @@ class BuildStylesWidgete extends StatelessWidget{
                                 width: size.width * 0.01,
                               ),
                               Text(
-                                style.time.toString() + ' min',
+                                style.time.toString() + ' sec',
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -97,9 +97,14 @@ class BuildStylesWidgete extends StatelessWidget{
                           //     color: white,
                           //   ),
                           // ),
-                          Checkbox(checkColor:primary,value: style.completed,onChanged:(val){
+                          Checkbox(checkColor:primary,
+                            value: style.completed,
+                            onChanged:(val){
                             // checkedFunction(taske);
                           },
+                            hoverColor: secondary,
+                            activeColor: secondary,
+
                           ),
                         ],
                       ),

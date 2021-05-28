@@ -213,13 +213,14 @@ class DBHelper {
   }
 
 
-  completeStyle(Style style) async {
+  Future<bool> completeStyle(Style style) async {
     try {
       Database database = await initDatabase();
       style.completed = true;
       int updatedRows = await database.update(styleTableName, style.toJson(),
           where: '$styleIdColumnName = ?', whereArgs: [style.id]);
       print(updatedRows);
+      return style.completed;
     } on Exception catch (e) {
       print(e);
     }
