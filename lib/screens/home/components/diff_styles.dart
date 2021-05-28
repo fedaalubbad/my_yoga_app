@@ -9,7 +9,7 @@ import 'build_style_widget.dart';
 class DiffStyles extends StatelessWidget {
   List<Style>styles;
   Function updateCourseProgress,completeStyle;
-  DiffStyles(this.styles,this.completeStyle,this.updateCourseProgress);
+  DiffStyles(this.styles,this.updateCourseProgress,this.completeStyle);
 
 
   @override

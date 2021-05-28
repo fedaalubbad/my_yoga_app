@@ -61,6 +61,7 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
       setState(() {
         _progressDone = true;
         if(!widget.style.completed) {
+          print('completedS ${widget.style.completed}');
           widget.updateCourseProgress(widget.style);
         }
         widget.completeStyle(widget.style);

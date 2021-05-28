@@ -2,6 +2,7 @@ import 'package:my_yoga_app/core/db/models/course.dart';
 import 'package:my_yoga_app/core/db/models/style.dart';
 
 final _standStyle = Style(
+  id: '1',
   imageUrl: 'assets/images/pose2.png',
   name: 'Standing Style',
   time: '5',
@@ -9,6 +10,7 @@ final _standStyle = Style(
   completed:false,
 );
 final _sittingStyle = Style(
+  id: '2',
   imageUrl: 'assets/images/pose1.png',
   name: 'Sitting Style',
   time: '8',
@@ -16,6 +18,7 @@ final _sittingStyle = Style(
   completed:false,
 );
 final _legCrossStyle = Style(
+  id: '3',
   imageUrl: 'assets/images/pose3.png',
   name: 'Leg Cross Style',
   time: '6',

@@ -107,7 +107,7 @@ class BuildStylesWidgete extends StatelessWidget{
                             activeColor: secondary,
 
                           ),
-                          Text('${style.completed}'),
+
                         ],
                       ),
                     )
