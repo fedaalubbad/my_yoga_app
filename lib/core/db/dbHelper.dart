@@ -173,15 +173,15 @@ class DBHelper {
     return courses;
   }
 
-  //  Future<Course> getSpecialCourse(String id)async{
-  //   Database database = await initDatabase();
-  //   List<Map<String, Object>> maps = [];
-  //   Course course;
-  //   maps=await database.query(courseTableName,
-  //       where: '$courseIdColumnName=?', whereArgs: [id]);
-  //   course=Course.fromMap(maps.first);
-  //   return course;
-  // }
+   Future<Course> getSpecialCourse(String id)async{
+    Database database = await initDatabase();
+    List<Map<String, Object>> maps = [];
+    Course course;
+    maps=await database.query(courseTableName,
+        where: '$courseIdColumnName=?', whereArgs: [id]);
+    course=Course.fromMap(maps.first);
+    return course;
+  }
   Future<List<Course>> getFavCourses() async {
     Database database = await initDatabase();
     List<Map<String, Object>> maps = [];
@@ -239,10 +239,16 @@ class DBHelper {
     }
   }
 
-  updateCourseProgress(Course course, progress) async {
+
+  Future<bool> updateCourseProgress(String courseId) async {
     try {
       Database database = await initDatabase();
-      course.progress = progress;
+      List<Map<String, Object>> maps = [];
+      Course course;
+      maps=await database.query(courseTableName,
+          where: '$courseIdColumnName=?', whereArgs: [courseId]);
+      course=Course.fromMap(maps.first);
+      course.progress +=10;
       int updatedRows = await database.update(courseTableName, course.toJson(),
           where: '$courseIdColumnName = ?', whereArgs: [course.id]);
       print(updatedRows);

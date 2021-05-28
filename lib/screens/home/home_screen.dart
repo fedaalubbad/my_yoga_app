@@ -100,6 +100,15 @@ class HomeScreenState extends State<HomeScreen> {
 
     });
   }
+  completeStyle(Style style)async{
+    await DBHelper.dbHelper.completeStyle(style);
+    await getStylesForBeginner(style.courseId);
+  }
+  updateCourseProgress(Style style)async{
+    await DBHelper.dbHelper.updateCourseProgress(style.courseId);
+    await getAllCourses();
+    await getfavoritsCourse();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -113,13 +122,13 @@ class HomeScreenState extends State<HomeScreen> {
            children: [
              CustomAppBar(),
 
-             DiffStyles(stylesForBeginner),
+             DiffStyles(stylesForBeginner,updateCourseProgress,completeStyle),
 
-             Courses(allCourses,LikeButtonTapped),
+             Courses(allCourses,LikeButtonTapped,updateCourseProgress,completeStyle),
            ],
          ),
        ): selsctedIconIndex==2?
-          Favorites_Courses(favCourses,LikeButtonTapped):
+          Favorites_Courses(favCourses,LikeButtonTapped,updateCourseProgress,completeStyle):
           Profile(profile),
 
       bottomNavigationBar: CurvedNavigationBar(

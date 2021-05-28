@@ -8,7 +8,8 @@ class StylesInCourse extends StatelessWidget {
   String title;
   String id;
   List<Style>allStyles;
-  StylesInCourse(this.title,this.id,this.allStyles) ;
+  Function updateCourseProgress,completeStyle;
+  StylesInCourse(this.title,this.id,this.allStyles,this.updateCourseProgress,this.completeStyle) ;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class StylesInCourse extends StatelessWidget {
                   // itemCount: styles.length,
                   itemCount: allStyles.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return BuildStylesWidgete(allStyles[index],'styles');
+                    return BuildStylesWidgete(allStyles[index],'styles',updateCourseProgress,completeStyle);
                   }),
             ),
           )

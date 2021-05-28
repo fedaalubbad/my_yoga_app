@@ -1,18 +1,16 @@
 import 'dart:async';
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
 import 'package:my_yoga_app/core/db/dbHelper.dart';
 import 'package:my_yoga_app/core/db/models/style.dart';
 import 'package:my_yoga_app/global/progress_painter.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class StyleDetails extends StatefulWidget {
   Style style;
-  StyleDetails(this.style);
+  Function updateCourseProgress,completeStyle;
+  StyleDetails(this.style,this.updateCourseProgress,this.completeStyle);
   @override
   _StyleDetailsState createState() {
     return _StyleDetailsState();
@@ -62,7 +60,10 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
       timer.cancel();
       setState(() {
         _progressDone = true;
-        completeStyle();
+        if(!widget.style.completed) {
+          widget.updateCourseProgress(widget.style);
+        }
+        widget.completeStyle(widget.style);
       });
     }
   }
@@ -119,9 +120,7 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
           circleWidth: 30.0),
     );
   }
-   completeStyle()async{
-    await DBHelper.dbHelper.completeStyle(widget.style);
-}
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

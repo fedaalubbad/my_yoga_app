@@ -15,8 +15,9 @@ class BuildCourseWidget extends StatelessWidget {
   Course course;
   List<Style> allStyles;
   Function likeFunction;
+  Function updateCourseProgress,completeStyle;
 
-  BuildCourseWidget(this.course,this.likeFunction);
+  BuildCourseWidget(this.course,this.likeFunction,this.updateCourseProgress,this.completeStyle);
 
   getStyles(String courseId) async {
     List<Style> styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
@@ -26,7 +27,7 @@ class BuildCourseWidget extends StatelessWidget {
 
   goScreen() {
     NavigationService.navigationService
-        .navigateToWidget(StylesInCourse(course.name, course.id, allStyles));
+        .navigateToWidget(StylesInCourse(course.name, course.id, allStyles,updateCourseProgress,completeStyle));
   }
   Future<bool> onLikeButtonTapped(bool isLiked) async{
     await likeFunction(course);

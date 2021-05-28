@@ -8,8 +8,8 @@ import 'build_style_widget.dart';
 
 class DiffStyles extends StatelessWidget {
   List<Style>styles;
-
-  DiffStyles(this.styles);
+  Function updateCourseProgress,completeStyle;
+  DiffStyles(this.styles,this.completeStyle,this.updateCourseProgress);
 
 
   @override
@@ -50,7 +50,7 @@ class DiffStyles extends StatelessWidget {
                 // itemCount: styles.length,
                 itemCount: styles.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return BuildStylesWidgete(styles[index],'home');
+                  return BuildStylesWidgete(styles[index],'home',updateCourseProgress,completeStyle);
                 }),
           ),
         )
