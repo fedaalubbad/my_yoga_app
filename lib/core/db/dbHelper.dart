@@ -216,7 +216,7 @@ class DBHelper {
   completeStyle(Style style) async {
     try {
       Database database = await initDatabase();
-      style.completed = !style.completed;
+      style.completed = true;
       int updatedRows = await database.update(styleTableName, style.toJson(),
           where: '$styleIdColumnName = ?', whereArgs: [style.id]);
       print(updatedRows);

@@ -25,7 +25,7 @@ class SplashScreenState extends State<SplashScreen>{
       print('isRegister $isRegister');
       if (isRegister) {
         NavigationService.
-           navigationService.routeReplacement(context,LoginScreen());
+           navigationService.routeReplacement(context,HomeScreen());
       } else {
         NavigationService.
         navigationService.routeReplacement(context,LoginScreen());
@@ -39,7 +39,7 @@ class SplashScreenState extends State<SplashScreen>{
           height: double.infinity,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/images/yoga-pose.png'),
+                  image: AssetImage('assets/images/pic1.jpg'),
                   fit: BoxFit.cover,colorFilter: ColorFilter.mode(secondary.withOpacity(0.8),BlendMode.darken))),
 
         ),
@@ -49,7 +49,7 @@ class SplashScreenState extends State<SplashScreen>{
              top:size.height/3 ,
              child: Container(
                 child:Column(children: [
-                  CircleAvatar(backgroundImage:AssetImage('assets/images/yoga.png',),radius: 60,backgroundColor: blueGrey,),
+                  CircleAvatar(backgroundImage:AssetImage('assets/images/yoga-pose.png',),radius: 60,backgroundColor: blueGrey,),
                   Text('Yoga',style: TextStyle(fontSize: 35,fontWeight: FontWeight.w500,color: Colors.white),)
                 ],)
 

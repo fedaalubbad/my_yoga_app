@@ -36,6 +36,7 @@ dependencies:
   syncfusion_flutter_gauges: ^19.1.65
   like_button: ^2.0.2
   image_picker: ^0.6.7+11
+  percent_indicator: ^3.0.1
 
 dev_dependencies:
   flutter_test:

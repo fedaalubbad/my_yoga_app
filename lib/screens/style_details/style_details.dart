@@ -1,63 +1,133 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
 import 'package:my_yoga_app/core/db/dbHelper.dart';
 import 'package:my_yoga_app/core/db/models/style.dart';
+import 'package:my_yoga_app/global/progress_painter.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class StyleDetails extends StatefulWidget {
-  Style _style;
-  double progress = 0;
-
-  StyleDetails(this._style);
-
-  Timer _timer;
-
+  Style style;
+  StyleDetails(this.style);
   @override
-  State<StatefulWidget> createState() {
-    return DttailsState();
+  _StyleDetailsState createState() {
+    return _StyleDetailsState();
   }
 }
 
-class DttailsState extends State<StyleDetails> {
-  AnimationController _controller;
+class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderStateMixin {
+  double _percentage;
+  double _nextPercentage;
+  Timer _timer;
+  AnimationController _progressAnimationController;
+  bool _progressDone;
 
-  void startTimer() {
-    // const oneSec = const Duration(seconds: 1);
-    //     widget._timer = new Timer.periodic(
-    //      oneSec,
-    //   (Timer timer) {
-    //     widget.progress++;
-    //     if (widget.progress == widget._style.time) {
-    //       setState(() {
-    //         completeStyle();
-    //         timer.cancel();
-    //       });
-    //       // } else {
-    //       //   setState(() {
-    //       //     progress--;
-    //       //   });
-    //     }
-    //   },
-    // );
-  }
   @override
-  void dispose() {
-    widget._timer.cancel();
-    super.dispose();
+  initState() {
+    super.initState();
+    _percentage = 0.0;
+    _nextPercentage = 0.0;
+    _timer = null;
+    _progressDone = false;
+    initAnimationController();
   }
 
-completeStyle()async{
-    await DBHelper.dbHelper.completeStyle(widget._style);
+  initAnimationController() {
+    _progressAnimationController = AnimationController(vsync:this,
+      duration: Duration(milliseconds: 1000),
+    )..addListener(
+          () {
+        setState(() {
+          _percentage = lerpDouble(_percentage, _nextPercentage,
+              _progressAnimationController.value);
+        });
+      },
+    );
+  }
+
+  start() {
+   int time =(((int.parse(widget.style.time))*10) / 2).floor();
+    Timer.periodic(Duration(milliseconds: time), handleTicker);
+  }
+
+  handleTicker(Timer timer) {
+    _timer = timer;
+    if (_nextPercentage < 100) {
+      publishProgress();
+    } else {
+      timer.cancel();
+      setState(() {
+        _progressDone = true;
+        completeStyle();
+      });
+    }
+  }
+
+  startProgress() {
+    if (null != _timer && _timer.isActive) {
+      _timer.cancel();
+    }
+    setState(() {
+      _percentage = 0.0;
+      _nextPercentage = 0.0;
+      _progressDone = false;
+      start();
+    });
+  }
+
+  publishProgress() {
+    setState(() {
+      _percentage = _nextPercentage;
+      _nextPercentage += 0.5;
+      if (_nextPercentage > 100.0) {
+        _percentage = 0.0;
+        _nextPercentage = 0.0;
+      }
+      _progressAnimationController.forward(from: 0.0);
+    });
+  }
+
+  getDoneImage() {
+    return Image.asset(
+      "assets/images/yoga-pose.png",
+      width: 60,
+      height: 60,
+    );
+  }
+
+  getProgressText() {
+    return Text(
+      _nextPercentage == 0 ? '0' : '${_nextPercentage.toInt()}',
+      style: TextStyle(
+          fontSize: 40, fontWeight: FontWeight.w800, color: Colors.green),
+    );
+  }
+
+  progressView() {
+    return CustomPaint(
+      child: Center(
+        child: _progressDone ? getDoneImage() : getProgressText(),
+      ),
+      foregroundPainter: ProgressPainter(
+          defaultCircleColor: primary,
+          percentageCompletedCircleColor: secondary,
+          completedPercentage: _percentage,
+          circleWidth: 30.0),
+    );
+  }
+   completeStyle()async{
+    await DBHelper.dbHelper.completeStyle(widget.style);
 }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget._style.name),
+        title: Text(widget.style.name),
         backgroundColor: secondary,
       ),
       body: Column(children: [
@@ -67,13 +137,13 @@ completeStyle()async{
               child: Image(
                 width: size.width * 0.3,
                 height: size.height * 0.2,
-                image: AssetImage(this.widget._style.imageUrl),
+                image: AssetImage(this.widget.style.imageUrl),
               ),
             ),
             Column(
               children: [
                 Text(
-                  widget._style.name,
+                  widget.style.name,
                   style: TextStyle(
                       color: primary,
                       fontWeight: FontWeight.bold,
@@ -99,7 +169,7 @@ completeStyle()async{
                       width: appPadding / 2,
                     ),
                     Text(
-                      '${widget._style.time} minuts',
+                      '${widget.style.time} minuts',
                       style: TextStyle(
                           color: secondary,
                           fontWeight: FontWeight.normal,
@@ -114,59 +184,27 @@ completeStyle()async{
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: startTimer,
-              child: Text(
-                'start',
-                style: TextStyle(color: white),
-              ),
-            ),
             Container(
-              height: 150,
-              width: 150,
-              child: SfRadialGauge(axes: <RadialAxis>[
-                RadialAxis(
-                    minimum: 0,
-                    maximum: 100,
-                    startAngle: 270,
-                    endAngle: 270,
-                    showLabels: false,
-                    showTicks: false,
-                    radiusFactor: 0.5,
-                    axisLineStyle: AxisLineStyle(
-                        cornerStyle: CornerStyle.bothFlat,
-                        color: Colors.black26,
-                        dashArray: [10, 5],
-                        thickness: 5),
-                    pointers: <GaugePointer>[
-                      RangePointer(
-                        value: widget.progress,
-                        cornerStyle: CornerStyle.bothFlat,
-                        width: 5,
-                        sizeUnit: GaugeSizeUnit.logicalPixel,
-                        color: Colors.lightBlueAccent,
-                      ),
-                      MarkerPointer(
-                        value: widget.progress,
-                        markerHeight: 20,
-                        markerWidth: 20,
-                        markerType: MarkerType.image,
-                        imageUrl: 'assets/icons/star.png',
-                        // borderColor: Colors.black12
-                      )
-                    ],
-                    annotations: <GaugeAnnotation>[
-                      GaugeAnnotation(
-                          angle: 90,
-                          axisValue: 5,
-                          positionFactor: 0.1,
-                          widget: Text(widget.progress.ceil().toString() + '%',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: secondary)))
-                    ])
-              ]),
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 160.0,
+                    width: 160.0,
+                    padding: EdgeInsets.all(20.0),
+                    margin: EdgeInsets.all(30.0),
+                    child: progressView(),
+                  ),
+                  OutlineButton(
+                    child: Text("START"),
+                    onPressed: () {
+                      startProgress();
+                    },
+                  )
+                ],
+    ),
             ),
           ],
         ),
