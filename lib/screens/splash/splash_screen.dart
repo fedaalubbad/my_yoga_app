@@ -49,8 +49,8 @@ class SplashScreenState extends State<SplashScreen>{
              top:size.height/3 ,
              child: Container(
                 child:Column(children: [
-                  CircleAvatar(backgroundImage:AssetImage('assets/images/yoga-pose.png',),radius: 60,backgroundColor: blueGrey,),
-                  Text('Yoga',style: TextStyle(fontSize: 35,fontWeight: FontWeight.w500,color: Colors.white),)
+                  CircleAvatar(backgroundImage:AssetImage('assets/icons/yoga_icon.png',),radius: 60,backgroundColor: blueGrey,),
+                  Text('My_Yoga',style: TextStyle(fontSize: 35,fontWeight: FontWeight.w500,color: Colors.white),)
                 ],)
 
           ),

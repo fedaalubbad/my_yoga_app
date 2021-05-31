@@ -31,13 +31,13 @@ class Courses extends StatelessWidget {
                     letterSpacing: 1.5,
                   ),
                 ),
-                Text(
-                  'See All',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                      color: primary),
-                ),
+                // Text(
+                //   'See All',
+                //   style: TextStyle(
+                //       fontSize: 18,
+                //       fontWeight: FontWeight.w800,
+                //       color: primary),
+                // ),
               ],
             ),
           ),

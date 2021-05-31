@@ -6,6 +6,8 @@ import 'package:my_yoga_app/screens/home/home_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:my_yoga_app/core/sp/sp_helper.dart';
+import '../sp/sp_helper.dart';
+import 'models/user.dart';
 import 'models/user.dart';
 
 class DBHelper {
@@ -261,6 +263,32 @@ class DBHelper {
       course.progress +=10;
       int updatedRows = await database.update(courseTableName, course.toJson(),
           where: '$courseIdColumnName = ?', whereArgs: [course.id]);
+      print(updatedRows);
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
+  updateUserInfo(User editedUser) async {
+    try {
+      Database database = await initDatabase();
+      List<Map<String, Object>> maps = [];
+      User user;
+      maps=await database.query(userTableName,
+          where: '$userEmailColumnName=?', whereArgs: [SPHelper.spHelper.getEmail()]);
+      user=User.fromMap(maps.first);
+      user=editedUser;
+      // if(name.length!=0)
+      // user.name=editedUser.name;
+      // user.height=editedUser.height;
+      // user.weight=editedUser.weight;
+      // if(height.length!=0)
+      // user.height =double.parse(height);
+      // if(weight.length!=0)
+      //   user.weight =double.parse(weight);
+
+      int updatedRows = await database.update(userTableName,user.toJson(),
+          where: '$userEmailColumnName = ?', whereArgs: [user.email]);
       print(updatedRows);
     } on Exception catch (e) {
       print(e);

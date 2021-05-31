@@ -3,6 +3,8 @@ import 'package:my_yoga_app/constants/constants.dart';
 import 'package:my_yoga_app/core/db/models/style.dart';
 import 'package:my_yoga_app/data/data.dart';
 
+import '../../../core/navigation_service/navigation_service.dart';
+import '../../StylesInCourse/stylesInCourse.dart';
 import 'build_style_widget.dart';
 
 
@@ -32,10 +34,13 @@ class DiffStyles extends StatelessWidget {
                   letterSpacing: 1.5,
                 ),
               ),
-              Text(
-                'See All',
-                style: TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.w800, color: primary),
+              InkWell(
+                onTap: goStylesScreen,
+                child: Text(
+                  'See All',
+                  style: TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.w800, color: primary),
+                ),
               ),
             ],
           ),
@@ -48,7 +53,7 @@ class DiffStyles extends StatelessWidget {
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 // itemCount: styles.length,
-                itemCount: styles.length,
+                itemCount:3,
                 itemBuilder: (BuildContext context, int index) {
                   return BuildStylesWidgete(styles[index],'home',updateCourseProgress,completeStyle);
                 }),
@@ -56,5 +61,9 @@ class DiffStyles extends StatelessWidget {
         )
       ],
     );
+  }
+  goStylesScreen(){
+    NavigationService.navigationService.navigateToWidget(StylesInCourse('Meditation', '2', styles, updateCourseProgress, completeStyle));
+
   }
 }

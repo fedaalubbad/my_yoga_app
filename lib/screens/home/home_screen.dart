@@ -12,6 +12,7 @@ import 'package:my_yoga_app/core/sp/sp_helper.dart';
 import 'package:my_yoga_app/data/data.dart';
 import 'package:my_yoga_app/screens/favourits/favourits.dart';
 import 'package:my_yoga_app/screens/profile/profile.dart';
+import '../../core/db/models/user.dart';
 import 'components/courses.dart';
 import 'components/custom_app_bar.dart';
 import 'components/diff_styles.dart';
@@ -117,6 +118,11 @@ class HomeScreenState extends State<HomeScreen> {
     await getAllCourses();
     await getfavoritsCourse();
   }
+   editUserInfo(User editedUser)async{
+    await DBHelper.dbHelper.updateUserInfo(editedUser);
+    await getUser();
+
+  }
   // List<Style> allStylesInCourse;
   // getStylesInCourse(String courseId) async {
   //   List<Style> styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
@@ -143,7 +149,7 @@ class HomeScreenState extends State<HomeScreen> {
          ),
        ): selsctedIconIndex==2?
           Favorites_Courses(favCourses,LikeButtonTapped,updateCourseProgress,completeStyle):
-          Profile(profile),
+          Profile(profile,editUserInfo),
 
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
