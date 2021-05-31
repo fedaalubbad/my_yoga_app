@@ -5,7 +5,7 @@ class User {
 	String name;
 	String email;
 	String password;
-	String image;
+	String image='assets/images/pic1.jpg';
 	double progress;
 	double weight;
 	double height;

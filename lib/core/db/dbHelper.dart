@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:my_yoga_app/core/sp/sp_helper.dart';
 import '../sp/sp_helper.dart';
+import '../sp/sp_helper.dart';
 import 'models/user.dart';
 import 'models/user.dart';
 
@@ -278,16 +279,8 @@ class DBHelper {
           where: '$userEmailColumnName=?', whereArgs: [SPHelper.spHelper.getEmail()]);
       user=User.fromMap(maps.first);
       user=editedUser;
-      // if(name.length!=0)
-      // user.name=editedUser.name;
-      // user.height=editedUser.height;
-      // user.weight=editedUser.weight;
-      // if(height.length!=0)
-      // user.height =double.parse(height);
-      // if(weight.length!=0)
-      //   user.weight =double.parse(weight);
-
-      int updatedRows = await database.update(userTableName,user.toJson(),
+       SPHelper.spHelper.setUserName(user.name);
+        int updatedRows = await database.update(userTableName,user.toJson(),
           where: '$userEmailColumnName = ?', whereArgs: [user.email]);
       print(updatedRows);
     } on Exception catch (e) {

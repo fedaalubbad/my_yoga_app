@@ -91,7 +91,8 @@ class CircleButton extends StatelessWidget {
                                  name_Contraller.text.isEmpty?user.name:name_Contraller.text
                                 ,user.email,user.password,
                                 height:h_Contraller.text.isEmpty?user.height:double.parse(h_Contraller.text ),
-                                weight:w_Contraller.text.isEmpty?user.weight:double.parse(w_Contraller.text));
+                                weight:w_Contraller.text.isEmpty?user.weight:double.parse(w_Contraller.text)
+                                ,image: user.image,progress: user.progress);
                                 editUserInfo(editedUser);
                                 }
 

@@ -52,6 +52,50 @@ final _legCrossStyle4 = Style(
   completed:false,
 );
 
+final _BoundAnglePose = Style(
+  id: '7',
+  imageUrl: 'assets/gif/BoundAnglePose.gif',
+  name: 'Bound Angle Pose',
+  time: '10',
+  courseId:'5',
+  completed:false,
+);
+
+final _NearWarpedKagu= Style(
+  id: '8',
+  imageUrl: 'assets/gif/NearWarpedKagu.gif',
+  name: 'Near Warped Kagu',
+  time: '10',
+  courseId:'5',
+  completed:false,
+);
+
+final _SoreParallelGecko= Style(
+  id: '9',
+  imageUrl: 'assets/gif/SoreParallelGecko.gif',
+  name: 'Sore Parallel Gecko',
+  time: '10',
+  courseId:'5',
+  completed:false,
+);
+
+final _FocusedBoringCrocodile= Style(
+  id: '10',
+  imageUrl: 'assets/gif/FocusedBoringCrocodile.gif',
+  name: 'Focused Boring Crocodile',
+  time: '10',
+  courseId:'5',
+  completed:false,
+);
+final _BiodegradableLankyEagle= Style(
+  id: '11',
+  imageUrl: 'assets/gif/BiodegradableLankyEagle.gif',
+  name: 'Biodegradable Lanky Eagle',
+  time: '10',
+  courseId:'5',
+  completed:false,
+);
+
 final List<Style>styles = [_standStyle,_sittingStyle,_legCrossStyle,_standStyle2,_sittingStyle3,_legCrossStyle4,];
 
 final _course1 = Course(
@@ -90,26 +134,28 @@ final _course4 = Course(
     name: 'Daily Yoga',
     time: 30,
     students: 'Intermediate',
-    fav:true,
-    progress: 0,
-);
-final _course5 = Course(
-    id: "4",
-    imageUrl: 'assets/images/pic2.jpg',
-    name: 'Daily Yoga',
-    time: 30,
-    students: 'Intermediate',
-    fav:true,
-    progress: 0,
-);
-final _course6 = Course(
-    id: "4",
-    imageUrl: 'assets/images/pic3.jpg',
-    name: 'Daily Yoga',
-    time: 30,
-    students: 'Intermediate',
-    fav:true,
+  fav:false,
     progress: 0,
 );
 
-final List<Course> courses = [_course1,_course2,_course3,_course4,_course5,_course6];
+final _course6 = Course(
+    id: "5",
+    imageUrl: 'assets/images/pic4.jpeg',
+    name: 'relaxation exercises ',
+    time: 30,
+    students: 'Intermediate',
+    fav:false,
+    progress: 0,
+);
+// final _course7 = Course(
+//     id: "7",
+//     imageUrl: 'assets/images/pic3.jpg',
+//     name: 'relaxation exercises ',
+//     time: 30,
+//     students: 'Intermediate',
+//     fav:true,
+//     progress: 0,
+// );
+
+// final List<Course> courses = [_course1,_course2,_course3,_course4,_course5,_course6];
+final List<Course> courses = [_course6];
