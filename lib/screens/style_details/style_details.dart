@@ -33,22 +33,24 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
     _progressDone = false;
     initAnimationController();
   }
-  // void buildSnackBar() {
-  //   final sBar = SnackBar(
-  //     content: Text('you deleted appbar title'),
-  //     backgroundColor: Colors.amber,
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(20),
-  //     ),
-  //     duration: Duration(seconds: 8),
-  //     action: SnackBarAction(
-  //       label: 'undo!',
-  //       textColor: Colors.black,
-  //       onPressed: null,
-  //     ),
-  //   );
-  //   _x.currentState.showSnackBar(sBar);
-  // }
+  final _x = GlobalKey<ScaffoldState>();
+
+  void buildSnackBar() {
+    final sBar = SnackBar(
+      content: Text('your excersise completed'),
+      backgroundColor: Colors.amber,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      duration: Duration(seconds: 8),
+      action: SnackBarAction(
+        label: 'undo!',
+        textColor: Colors.black,
+        onPressed: null,
+      ),
+    );
+    _x.currentState.showSnackBar(sBar);
+  }
 
   initAnimationController() {
     _progressAnimationController = AnimationController(vsync:this,
@@ -81,6 +83,7 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
           widget.updateCourseProgress(widget.style);
         }
         widget.completeStyle(widget.style);
+        // buildSnackBar();
         widget.getStyles(widget.style.courseId);
       });
     }
@@ -112,7 +115,7 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
 
   getDoneImage() {
     return Image.asset(
-      "assets/images/yoga-pose.png",
+      "assets/icons/tick.png",
       width: 60,
       height: 60,
     );
@@ -142,7 +145,6 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final _x = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: _x,
       appBar: AppBar(

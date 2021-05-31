@@ -25,8 +25,34 @@ final _legCrossStyle = Style(
   courseId:'2',
   completed:false,
 );
+final _standStyle2 = Style(
+  id: '4',
+  imageUrl: 'assets/images/pose2.png',
+  name: 'Standing Style',
+  time: '5',
+  courseId:'2',
+  completed:false,
+);
 
-final List<Style>styles = [_standStyle,_sittingStyle,_legCrossStyle];
+final _sittingStyle3 = Style(
+  id: '5',
+  imageUrl: 'assets/images/pose1.png',
+  name: 'Sitting Style',
+  time: '9',
+  courseId:'2',
+  completed:false,
+);
+
+final _legCrossStyle4 = Style(
+  id: '6',
+  imageUrl: 'assets/images/pose3.png',
+  name: 'Leg Cross Style',
+  time: '10',
+  courseId:'2',
+  completed:false,
+);
+
+final List<Style>styles = [_standStyle,_sittingStyle,_legCrossStyle,_standStyle2,_sittingStyle3,_legCrossStyle4,];
 
 final _course1 = Course(
     id: '1',
