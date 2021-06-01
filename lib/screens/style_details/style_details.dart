@@ -152,17 +152,18 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
         backgroundColor: secondary,
       ),
       body: Column(children: [
-        Row(
-          children: [
+
             Container(
               child: Image(
-                width: size.width * 0.3,
-                height: size.height * 0.2,
+                fit: BoxFit.fill,
+                width: double.infinity,
+                height: size.height /3,
                 image: AssetImage(this.widget.style.imageUrl),
               ),
             ),
             Column(
               children: [
+                SizedBox(height: 20,),
                 Text(
                   widget.style.name,
                   style: TextStyle(
@@ -174,6 +175,7 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
                   height: appPadding / 2,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.timer,
@@ -196,8 +198,7 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
                           fontWeight: FontWeight.normal,
                           fontSize: 16),
                     ),
-                  ],
-                ),
+
               ],
             ),
           ],
@@ -218,7 +219,7 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
                     margin: EdgeInsets.all(30.0),
                     child: progressView(),
                   ),
-                  OutlineButton(
+                  ElevatedButton(
                     child: Text("START"),
                     onPressed: () {
                       startProgress();

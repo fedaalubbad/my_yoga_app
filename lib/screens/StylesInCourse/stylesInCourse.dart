@@ -34,22 +34,22 @@ class _styleInCourseState extends State<StylesInCourse>{
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(backgroundColor:secondary,title: Text(widget.title),leading: IconButton(icon: Icon(Icons.arrow_back_ios),
-        onPressed:()=> Navigator.of(context).pop(),),),
-      body: Padding(
-            padding: const EdgeInsets.only(left: appPadding / 2),
-            child: Container(
-              height: double.infinity,
-              child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  // itemCount: styles.length,
-                  itemCount: widget.allStyles.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return BuildStylesWidgete(widget.allStyles[index],'styles',widget.updateCourseProgress,widget.completeStyle,getStyles:getStyles);
-                  }),
-            ),
-          )
+        appBar: AppBar(backgroundColor:secondary,title: Text(widget.title),leading: IconButton(icon: Icon(Icons.arrow_back_ios),
+          onPressed:()=> Navigator.of(context).pop(),),),
+        body: Padding(
+          padding: const EdgeInsets.only(left: appPadding / 2),
+          child: Container(
+            height: double.infinity,
+            child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                // itemCount: styles.length,
+                itemCount: widget.allStyles.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return BuildStylesWidgete(widget.allStyles[index],'styles',widget.updateCourseProgress,widget.completeStyle,getStyles:getStyles);
+                }),
+          ),
+        )
     );
   }
 

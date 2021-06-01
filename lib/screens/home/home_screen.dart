@@ -45,8 +45,8 @@ class HomeScreenState extends State<HomeScreen> {
   int selsctedIconIndex = 1;
   List<Course>allCourses;
   getAllCourses()async{
-      List<Course>courses = await DBHelper.dbHelper.getAllCourses();
-      this.allCourses = courses;
+    List<Course>courses = await DBHelper.dbHelper.getAllCourses();
+    this.allCourses = courses;
     setState(() {
     });
   }
@@ -54,18 +54,18 @@ class HomeScreenState extends State<HomeScreen> {
   List<Style>stylesList;
 
   getStylesForBeginner(String courseId)async{
-      List<Style>styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
-      this.stylesForBeginner = styles;
+    List<Style>styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
+    this.stylesForBeginner = styles;
 
     setState(() {
     });
     return styles;
   }
-   var email=SPHelper.spHelper.getEmail();
+  var email=SPHelper.spHelper.getEmail();
   User profile;
   getUser()async{
-      User user = await DBHelper.dbHelper.getUser(email);
-      this.profile = user;
+    User user = await DBHelper.dbHelper.getUser(email);
+    this.profile = user;
 
     setState(() {
     });
@@ -74,8 +74,8 @@ class HomeScreenState extends State<HomeScreen> {
 
   List<Course>favCourses;
   getfavoritsCourse()async{
-      List<Course>courses = await DBHelper.dbHelper.getFavCourses();
-      this.favCourses = courses;
+    List<Course>courses = await DBHelper.dbHelper.getFavCourses();
+    this.favCourses = courses;
     setState(() {
     });
     return favCourses;
@@ -84,8 +84,8 @@ class HomeScreenState extends State<HomeScreen> {
 
   insertCourses() async{
     for (int i=0; i < courses.length; i++) {
-     await DBHelper.dbHelper.insertCourse(courses[i]);
-     await getAllCourses();
+      await DBHelper.dbHelper.insertCourse(courses[i]);
+      await getAllCourses();
     }
   }
   insertStyles()async{
@@ -95,7 +95,7 @@ class HomeScreenState extends State<HomeScreen> {
     }
   }
   deleteData()async{
-   await DBHelper.dbHelper.cleanDatabase();
+    await DBHelper.dbHelper.cleanDatabase();
     // DBHelper.dbHelper.deleteTable();
     // setState(() {
     //
@@ -118,17 +118,17 @@ class HomeScreenState extends State<HomeScreen> {
     await getAllCourses();
     await getfavoritsCourse();
   }
-   editUserInfo(User editedUser)async{
+  editUserInfo(User editedUser)async{
     await DBHelper.dbHelper.updateUserInfo(editedUser);
     await getUser();
 
   }
-  // List<Style> allStylesInCourse;
-  // getStylesInCourse(String courseId) async {
-  //   List<Style> styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
-  //   allStylesInCourse = styles;
-  //   return styles;
-  // }
+  getStyles(String courseId) async {
+    List<Style> styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
+
+    return styles;
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -136,20 +136,20 @@ class HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       extendBody: true,
       body:selsctedIconIndex==1? Padding(
-         padding: EdgeInsets.only(top:appPadding * 2),
+        padding: EdgeInsets.only(top:appPadding * 2),
 
-         child: Column(
-           children: [
-             CustomAppBar(),
+        child: Column(
+          children: [
+            CustomAppBar(),
 
-             DiffStyles(stylesForBeginner,updateCourseProgress,completeStyle),
+            DiffStyles(stylesForBeginner,updateCourseProgress,completeStyle),
 
-             Courses(allCourses,LikeButtonTapped,updateCourseProgress,completeStyle),
-           ],
-         ),
-       ): selsctedIconIndex==2?
-          Favorites_Courses(favCourses,LikeButtonTapped,updateCourseProgress,completeStyle):
-          Profile(profile,editUserInfo),
+            Courses(allCourses,LikeButtonTapped,updateCourseProgress,completeStyle,getStyles:getStyles),
+          ],
+        ),
+      ): selsctedIconIndex==2?
+      Favorites_Courses(favCourses,LikeButtonTapped,updateCourseProgress,completeStyle,getStyles:getStyles):
+      Profile(profile,editUserInfo),
 
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,

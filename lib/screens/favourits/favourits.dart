@@ -9,8 +9,8 @@ import '../home/components/custom_app_bar.dart';
 class Favorites_Courses extends StatelessWidget{
   List<Course> courses;
   Function likeFun;
-  Function updateCourseProgress,completeStyle;
-  Favorites_Courses(this.courses,this.likeFun,this.updateCourseProgress,this.completeStyle);
+  Function updateCourseProgress,completeStyle,getStyles;
+  Favorites_Courses(this.courses,this.likeFun,this.updateCourseProgress,this.completeStyle,{this.getStyles});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

@@ -52,7 +52,7 @@ final _legCrossStyle4 = Style(
   completed:false,
 );
 
-final _BoundAnglePose = Style(
+final _BoundAnglePose1 = Style(
   id: '7',
   imageUrl: 'assets/gif/BoundAnglePose.gif',
   name: 'Bound Angle Pose',
@@ -61,7 +61,7 @@ final _BoundAnglePose = Style(
   completed:false,
 );
 
-final _NearWarpedKagu= Style(
+final _NearWarpedKagu2= Style(
   id: '8',
   imageUrl: 'assets/gif/NearWarpedKagu.gif',
   name: 'Near Warped Kagu',
@@ -70,7 +70,7 @@ final _NearWarpedKagu= Style(
   completed:false,
 );
 
-final _SoreParallelGecko= Style(
+final _SoreParallelGecko3= Style(
   id: '9',
   imageUrl: 'assets/gif/SoreParallelGecko.gif',
   name: 'Sore Parallel Gecko',
@@ -79,7 +79,7 @@ final _SoreParallelGecko= Style(
   completed:false,
 );
 
-final _FocusedBoringCrocodile= Style(
+final _FocusedBoringCrocodile4= Style(
   id: '10',
   imageUrl: 'assets/gif/FocusedBoringCrocodile.gif',
   name: 'Focused Boring Crocodile',
@@ -87,7 +87,7 @@ final _FocusedBoringCrocodile= Style(
   courseId:'5',
   completed:false,
 );
-final _BiodegradableLankyEagle= Style(
+final _BiodegradableLankyEagle5= Style(
   id: '11',
   imageUrl: 'assets/gif/BiodegradableLankyEagle.gif',
   name: 'Biodegradable Lanky Eagle',
@@ -96,7 +96,25 @@ final _BiodegradableLankyEagle= Style(
   completed:false,
 );
 
-final List<Style>styles = [_standStyle,_sittingStyle,_legCrossStyle,_standStyle2,_sittingStyle3,_legCrossStyle4,];
+final _AcclaimedGorgeousAsiatic6= Style(
+  id: '12',
+  imageUrl: 'assets/gif/AcclaimedGorgeousAsiatic.gif',
+  name: 'Acclaimed Gorgeous Asiatic',
+  time: '10',
+  courseId:'5',
+  completed:false,
+);
+final _TwoKneeSpinalTwist7= Style(
+  id: '13',
+  imageUrl: 'assets/gif/Two_Knee_Spinal_Twist_pose.gif',
+  name: 'TwoKnee Spinal Twist',
+  time: '10',
+  courseId:'5',
+  completed:false,
+);
+
+// final List<Style>styles = [_standStyle,_sittingStyle,_legCrossStyle,_standStyle2,_sittingStyle3,_legCrossStyle4,];
+final List<Style>styles = [_standStyle,_sittingStyle,_legCrossStyle,_standStyle2,_sittingStyle3,_legCrossStyle4,_BoundAnglePose1,_NearWarpedKagu2,_SoreParallelGecko3,_FocusedBoringCrocodile4,_BiodegradableLankyEagle5,_AcclaimedGorgeousAsiatic6,_TwoKneeSpinalTwist7];
 
 final _course1 = Course(
     id: '1',
@@ -138,7 +156,7 @@ final _course4 = Course(
     progress: 0,
 );
 
-final _course6 = Course(
+final _course5 = Course(
     id: "5",
     imageUrl: 'assets/images/pic4.jpeg',
     name: 'relaxation exercises ',
@@ -157,5 +175,5 @@ final _course6 = Course(
 //     progress: 0,
 // );
 
-// final List<Course> courses = [_course1,_course2,_course3,_course4,_course5,_course6];
-final List<Course> courses = [_course6];
+final List<Course> courses = [_course1,_course2,_course3,_course4,_course5,];
+// final List<Course> courses = [_course5];
