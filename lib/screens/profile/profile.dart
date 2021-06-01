@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_yoga_app/constants/constants.dart';
@@ -49,8 +51,8 @@ class Profile extends StatelessWidget {
                                       child: Center(
                                         child: CircleAvatar(
                                           radius: 100,
-                                          backgroundImage: AssetImage(
-                                            user.image,
+                                          backgroundImage: FileImage(
+                                            File(user.image),
                                           ),
                                         ),
                                       ),

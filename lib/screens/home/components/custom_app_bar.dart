@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -43,8 +45,8 @@ class CustomAppBar extends StatelessWidget {
                         padding: const EdgeInsets.all(appPadding / 8),
                         child: Center(
                           child: CircleAvatar(
-                            backgroundImage: AssetImage(
-                              image,
+                            backgroundImage: FileImage(
+                              File(image),
                             ),
                           ),
                         ),

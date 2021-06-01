@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:my_yoga_app/core/navigation_service/navigation_service.dart';
 import 'package:my_yoga_app/screens/auth/login/login_screen.dart';
 import 'package:my_yoga_app/screens/splash/splash_screen.dart';
@@ -25,14 +27,14 @@ class SPHelper {
     sharedPreferences.setString('email', email);
   }
   setUserImage(String image){
-    sharedPreferences.setString('image', image);
+    sharedPreferences.setString('image', image.toString());
 
   }
   setUserName(String name){
     sharedPreferences.setString('name', name);
   }
   String getUserImage(){
-    var image = sharedPreferences.get('image');
+    var image = sharedPreferences.getString('image');
     return image;
   }
 

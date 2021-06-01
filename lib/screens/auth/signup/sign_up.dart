@@ -106,7 +106,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   saveForm(BuildContext context) async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      User user = User(name, email, password, image: image,
+      User user = User(name, email, password, image: _image.path,
           weight: weight,
           height: height,
           progress: 0.0);

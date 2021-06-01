@@ -1,15 +1,17 @@
 
+import 'dart:io';
+
 import '../dbHelper.dart';
 
 class User {
 	String name;
 	String email;
 	String password;
-	String image='assets/images/pic1.jpg';
+	String image;
 	double progress;
 	double weight;
 	double height;
-	User(this.name,this.email, this.password,{this.image='assets/images/pic1.jpg',this.weight=0.0,this.height=0.0,this.progress=0.0});
+	User(this.name,this.email, this.password,{this.image,this.weight=0.0,this.height=0.0,this.progress=0.0});
 	User.fromMap(Map map) {
 		this.name = map[DBHelper.userNameColumnName];
 		this.email = map[DBHelper.userEmailColumnName];
