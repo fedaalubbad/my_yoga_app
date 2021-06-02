@@ -111,7 +111,7 @@ class HomeScreenState extends State<HomeScreen> {
   }
   completeStyle(Style style)async{
     await DBHelper.dbHelper.completeStyle(style);
-    await getStylesForBeginner(style.courseId);
+    await getStylesForBeginner('2');
   }
   updateCourseProgress(Style style)async{
     await DBHelper.dbHelper.updateCourseProgress(style.courseId);
@@ -141,9 +141,9 @@ class HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             CustomAppBar(),
-
-            DiffStyles(stylesForBeginner,updateCourseProgress,completeStyle),
-
+                stylesForBeginner.isEmpty? CircularProgressIndicator():
+                DiffStyles(stylesForBeginner,updateCourseProgress,completeStyle),
+            allCourses.isEmpty? CircularProgressIndicator():
             Courses(allCourses,LikeButtonTapped,updateCourseProgress,completeStyle,getStyles:getStyles),
           ],
         ),

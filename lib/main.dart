@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_yoga_app/provider.dart';
 import 'package:my_yoga_app/screens/splash/splash_screen.dart';
+import 'package:provider/provider.dart';
 import 'core/navigation_service/navigation_service.dart';
 import 'core/sp/sp_helper.dart';
 
@@ -13,7 +15,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider<MyProvider>(
+      create:(context)=>MyProvider(),
+      child :MaterialApp(
       navigatorKey: NavigationService.navigationService.navigatorKey,
       title: 'Yoga App',
       debugShowCheckedModeBanner: false,
@@ -22,6 +26,7 @@ class MyApp extends StatelessWidget {
       //   visualDensity: VisualDensity.adaptivePlatformDensity,
       // ),
       home: SplashScreen(),
+    )
     );
   }
 }

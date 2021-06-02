@@ -21,8 +21,8 @@ class DiffStyles extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: appPadding, vertical: appPadding),
+          padding: const EdgeInsets.only(
+              bottom: appPadding/2,top: appPadding,left: appPadding ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -48,7 +48,7 @@ class DiffStyles extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: appPadding / 2),
           child: Container(
-            height: size.height * 0.33,
+            height: size.height * 0.30,
             child: ListView.builder(
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,

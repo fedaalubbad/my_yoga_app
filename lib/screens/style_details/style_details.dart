@@ -6,6 +6,9 @@ import 'package:my_yoga_app/constants/constants.dart';
 import 'package:my_yoga_app/core/db/dbHelper.dart';
 import 'package:my_yoga_app/core/db/models/style.dart';
 import 'package:my_yoga_app/global/progress_painter.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider.dart';
 
 class StyleDetails extends StatefulWidget {
   Style style;
@@ -84,7 +87,9 @@ class _StyleDetailsState extends State<StyleDetails> with SingleTickerProviderSt
         }
         widget.completeStyle(widget.style);
         // buildSnackBar();
-        widget.getStyles(widget.style.courseId);
+        // widget.getStyles(widget.style.courseId);
+        Provider.of<MyProvider>(context).getStyles(widget.style.courseId);
+
       });
     }
   }

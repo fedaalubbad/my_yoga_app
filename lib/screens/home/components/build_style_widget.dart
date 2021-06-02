@@ -28,9 +28,9 @@ class BuildStylesWidgete extends StatelessWidget{
               padding: const EdgeInsets.symmetric(horizontal: appPadding / 2),
               child: Container(
                 margin:
-                EdgeInsets.only(top: appPadding * 3, bottom: appPadding * 2),
+                EdgeInsets.only(top: appPadding , bottom: appPadding*2 ),
                 width:this.from=='home'? size.width * 0.4:size.width,
-                height: size.height * 0.2,
+                height: size.height * 0.22,
                 decoration: BoxDecoration(
                     color: white,
                     borderRadius: BorderRadius.only(
@@ -121,7 +121,7 @@ class BuildStylesWidgete extends StatelessWidget{
             top: 0,
             child: Container(
               child: Image(
-                width: size.width * 0.3,
+                width: size.width * 0.2,
                 height: size.height * 0.2,
                 image: AssetImage(style.imageUrl),
               ),

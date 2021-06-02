@@ -3,13 +3,15 @@ import 'package:my_yoga_app/constants/constants.dart';
 import 'package:my_yoga_app/core/db/dbHelper.dart';
 import 'package:my_yoga_app/core/db/models/style.dart';
 import 'package:my_yoga_app/screens/home/components/build_style_widget.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider.dart';
 
 class StylesInCourse extends StatefulWidget {
   String title;
   String id;
   List<Style>allStyles;
   Function updateCourseProgress, completeStyle;
-
   StylesInCourse(this.title, this.id, this.allStyles, this.updateCourseProgress, this.completeStyle);
 
   @override
@@ -18,20 +20,13 @@ class StylesInCourse extends StatefulWidget {
   }
 }
 class _styleInCourseState extends State<StylesInCourse>{
-  @override
-  void initState() {
-    getStyles(widget.id);
-    super.initState();
-    setState(() {
-    });
-  }
+
   getStyles(String courseId) async {
-    List<Style> styles = await DBHelper.dbHelper.getStylesInCourse(courseId);
-    widget.allStyles = styles;
-    return styles;
+    Provider.of<MyProvider>(context).getStyles(courseId);
   }
   @override
   Widget build(BuildContext context) {
+    Provider.of<MyProvider>(context).getStyles(widget.id);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(backgroundColor:secondary,title: Text(widget.title),leading: IconButton(icon: Icon(Icons.arrow_back_ios),
@@ -44,9 +39,9 @@ class _styleInCourseState extends State<StylesInCourse>{
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 // itemCount: styles.length,
-                itemCount: widget.allStyles.length,
+                itemCount: Provider.of<MyProvider>(context).allStyles.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return BuildStylesWidgete(widget.allStyles[index],'styles',widget.updateCourseProgress,widget.completeStyle,getStyles:getStyles);
+                  return BuildStylesWidgete(Provider.of<MyProvider>(context).allStyles[index],'styles',widget.updateCourseProgress,widget.completeStyle,getStyles:getStyles);
                 }),
           ),
         )

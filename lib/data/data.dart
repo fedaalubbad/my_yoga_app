@@ -106,7 +106,7 @@ final _AcclaimedGorgeousAsiatic6= Style(
 );
 final _TwoKneeSpinalTwist7= Style(
   id: '13',
-  imageUrl: 'assets/gif/Two_Knee_Spinal_Twist_pose.gif',
+  imageUrl: 'assets/gif/TwoKneeSpinalTwistPose.gif',
   name: 'TwoKnee Spinal Twist',
   time: '10',
   courseId:'5',

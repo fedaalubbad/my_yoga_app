@@ -44,16 +44,17 @@ class BuildCourseWidget extends StatelessWidget {
         onTap: goScreen,
         child: Padding(
           padding: const EdgeInsets.symmetric(
-              horizontal: appPadding, vertical: appPadding / 2),
+              horizontal: appPadding,),
           child: Container(
-            height: size.height * 0.2,
+            height: size.height * 0.25,
+            margin: EdgeInsets.only(bottom: appPadding),
             decoration: BoxDecoration(
                 color: white,
                 borderRadius: BorderRadius.circular(30.0),
                 boxShadow: [
                   BoxShadow(
                       color: black.withOpacity(0.3),
-                      blurRadius: 30.0,
+                      blurRadius: 10.0,
                       offset: Offset(10, 15))
                 ]),
             child: Padding(
